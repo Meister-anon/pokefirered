@@ -1217,8 +1217,8 @@
       "secondaryId": 0
     },
     {
-      "english": "X DEFEND",
-      "itemId": "ITEM_X_DEFEND",
+      "english": "X DEFENSE",
+      "itemId": "ITEM_X_DEFENSE",
       "price": 550,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
@@ -1265,8 +1265,8 @@
       "secondaryId": 0
     },
     {
-      "english": "X SPECIAL",
-      "itemId": "ITEM_X_SPECIAL",
+      "english": "X SPECIAL ATTACK",
+      "itemId": "ITEM_X_SP_ATK",
       "price": 350,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
@@ -1313,19 +1313,19 @@
       "secondaryId": 0
     },
     {
-      "english": "????????",
-      "itemId": "ITEM_NONE",
-      "price": 0,
+      "english": "X SPECIAL DEFENSE",
+      "itemId": "ITEM_X_SP_DEF",
+      "price": 350,
       "holdEffect": "HOLD_EFFECT_NONE",
       "holdEffectParam": 0,
-      "description_english": "?????",
+      "description_english": "Raises the SP. DEF stat of POKéMON\\nin battle. Wears off if the POKéMON\\nis withdrawn.",
       "importance": 0,
       "exitsBagOnUse": 0,
       "pocket": "POCKET_ITEMS",
       "type": 4,
       "fieldUseFunc": "FieldUseFunc_OakStopsYou",
-      "battleUsage": 0,
-      "battleUseFunc": "NULL",
+      "battleUsage": 2,
+      "battleUseFunc": "BattleUseFunc_GuardSpec",
       "secondaryId": 0
     },
     {

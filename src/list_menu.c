@@ -72,33 +72,34 @@ static void ListMenuDrawCursor(struct ListMenu *list);
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
 static u8 ListMenuAddCursorObject(struct ListMenu *list, u32 cursorKind);
 
-const struct MoveMenuInfoIcon gMoveMenuInfoIcons[] =
-{
+const struct MoveMenuInfoIcon gMoveMenuInfoIcons[] = //fairy addition this should be for coordinates. use HMA table to easily apply additions, just read the hex value @ bottom right
+{ //                                    anything above 0xFF need use reverse indian or little indian? so 00 01  should be 0x100
     { 12, 12, 0x00 },       // Unused
-    { 32, 12, 0x20 },       // Normal icon
-    { 32, 12, 0x64 },       // Fight icon
-    { 32, 12, 0x60 },       // Flying icon
-    { 32, 12, 0x80 },       // Poison icon
-    { 32, 12, 0x48 },       // Ground icon
-    { 32, 12, 0x44 },       // Rock icon
-    { 32, 12, 0x6C },       // Bug icon
-    { 32, 12, 0x68 },       // Ghost icon
-    { 32, 12, 0x88 },       // Steel icon
+    { 32, 12, 0x20 },       // Normal icon  -00
+    { 32, 12, 0x64 },       // Fight icon   -01
+    { 32, 12, 0x60 },       // Flying icon  -02
+    { 32, 12, 0x80 },       // Poison icon  -03
+    { 32, 12, 0x48 },       // Ground icon  -04
+    { 32, 12, 0x44 },       // Rock icon    -05
+    { 32, 12, 0x6C },       // Bug icon     -06
+    { 32, 12, 0x68 },       // Ghost icon   -07
+    { 32, 12, 0x88 },       // Steel icon   -08
     { 32, 12, 0xA4 },       // ??? (Mystery) icon
-    { 32, 12, 0x24 },       // Fire icon
-    { 32, 12, 0x28 },       // Water icon
-    { 32, 12, 0x2C },       // Grass icon
-    { 32, 12, 0x40 },       // Electric icon
-    { 32, 12, 0x84 },       // Psychic icon
-    { 32, 12, 0x4C },       // Ice icon
-    { 32, 12, 0xA0 },       // Dragon icon
-    { 32, 12, 0x8C },       // Dark icon
-    { 40, 12, 0xA8 },       // -Type- icon
-    { 40, 12, 0xC0 },       // -Power- icon
+    { 32, 12, 0x24 },       // Fire icon    -0A
+    { 32, 12, 0x28 },       // Water icon   -0B
+    { 32, 12, 0x2C },       // Grass icon   -0C
+    { 32, 12, 0x40 },       // Electric icon 0D
+    { 32, 12, 0x84 },       // Psychic icon -0E
+    { 32, 12, 0x4C },       // Ice icon     -0F
+    { 32, 12, 0xA0 },       // Dragon icon  -10
+    { 32, 12, 0x8C },       // Dark icon    -11
+    { 40, 12, 0xA8 },       // -Type- icon  -12  This is why setting fairy to 0x12 put up type icon instead of fairy.
+    { 40, 12, 0xC0 },       // -Power- icon -13
     { 40, 12, 0xC8 },       // -Accuracy- icon
-    { 40, 12, 0xE0 },       // -PP- icon
-    { 40, 12, 0xE8 },       // -Effect- icon
-};
+    { 40, 12, 0xE0 },       // -PP- icon    -15
+    { 40, 12, 0xE8 },       // -Effect- icon 16
+    { 40, 12, 0x08 },       // Fairy Icon   -17
+}; // use this comment order for any additional types
 
 static void ListMenuDummyTask(u8 taskId)
 {

@@ -6,6 +6,8 @@
 #include "constants/pokemon.h"
 #include "pokemon_storage_system.h"
 
+#define GET_BASE_SPECIES_ID(speciesId) (GetFormSpeciesId(speciesId, 0))
+
 struct PokemonSubstruct0
 {
     u16 species;
@@ -178,7 +180,7 @@ struct BattlePokemon
     /*0x17*/ u32 isEgg:1;
     /*0x17*/ u32 abilityNum:1;
     /*0x18*/ s8 statStages[BATTLE_STATS_NO];
-    /*0x20*/ u8 ability;
+    /*0x20*/ u16 ability;
     /*0x21*/ u8 type1;
     /*0x22*/ u8 type2;
     /*0x23*/ u8 unknown;
@@ -198,7 +200,7 @@ struct BattlePokemon
     /*0x54*/ u32 otId;
 };
 
-struct BaseStats
+struct BaseStats  // had to adjust struct order to match paste value from base_stats.h
 {
  /* 0x00 */ u8 baseHP;
  /* 0x01 */ u8 baseAttack;
@@ -209,7 +211,7 @@ struct BaseStats
  /* 0x06 */ u8 type1;
  /* 0x07 */ u8 type2;
  /* 0x08 */ u8 catchRate;
- /* 0x09 */ u8 expYield;
+ /* 0x09 */ u16 expYield;
  /* 0x0A */ u16 evYield_HP:2;
  /* 0x0A */ u16 evYield_Attack:2;
  /* 0x0A */ u16 evYield_Defense:2;
@@ -224,10 +226,12 @@ struct BaseStats
  /* 0x13 */ u8 growthRate;
  /* 0x14 */ u8 eggGroup1;
  /* 0x15 */ u8 eggGroup2;
- /* 0x16 */ u8 abilities[2];
- /* 0x18 */ u8 safariZoneFleeRate;
- /* 0x19 */ u8 bodyColor : 7;
+ /* 0x16 */ u16 abilities[2];
+ /* 0x1A */ u8 safariZoneFleeRate;
+ /* 0x1B */ u16 abilityHidden;
+ /* 0x1D */ u8 bodyColor : 7;
             u8 noFlip : 1;
+ /* 0x1E */ u8 flags;
 };
 
 struct BattleMove
@@ -288,21 +292,40 @@ enum
     BODY_COLOR_PINK
 };
 
-#define EVO_FRIENDSHIP       0x0001 // Pokémon levels up with friendship ≥ 220
-#define EVO_FRIENDSHIP_DAY   0x0002 // Pokémon levels up during the day with friendship ≥ 220
-#define EVO_FRIENDSHIP_NIGHT 0x0003 // Pokémon levels up at night with friendship ≥ 220
-#define EVO_LEVEL            0x0004 // Pokémon reaches the specified level
-#define EVO_TRADE            0x0005 // Pokémon is traded
-#define EVO_TRADE_ITEM       0x0006 // Pokémon is traded while it's holding the specified item
-#define EVO_ITEM             0x0007 // specified item is used on Pokémon
-#define EVO_LEVEL_ATK_GT_DEF 0x0008 // Pokémon reaches the specified level with attack > defense
-#define EVO_LEVEL_ATK_EQ_DEF 0x0009 // Pokémon reaches the specified level with attack = defense
-#define EVO_LEVEL_ATK_LT_DEF 0x000a // Pokémon reaches the specified level with attack < defense
-#define EVO_LEVEL_SILCOON    0x000b // Pokémon reaches the specified level with a Silcoon personality value
-#define EVO_LEVEL_CASCOON    0x000c // Pokémon reaches the specified level with a Cascoon personality value
-#define EVO_LEVEL_NINJASK    0x000d // Pokémon reaches the specified level (special value for Ninjask)
-#define EVO_LEVEL_SHEDINJA   0x000e // Pokémon reaches the specified level (special value for Shedinja)
-#define EVO_BEAUTY           0x000f // Pokémon levels up with beauty ≥ specified value
+#define EVO_FRIENDSHIP       				0x0001 // Pokémon levels up with friendship ≥ 220
+#define EVO_FRIENDSHIP_DAY   				0x0002 // Pokémon levels up during the day with friendship ≥ 220
+#define EVO_FRIENDSHIP_NIGHT 				0x0003 // Pokémon levels up at night with friendship ≥ 220
+#define EVO_LEVEL            				0x0004 // Pokémon reaches the specified level
+#define EVO_TRADE            				0x0005 // Pokémon is traded
+#define EVO_TRADE_ITEM       				0x0006 // Pokémon is traded while it's holding the specified item
+#define EVO_ITEM             				0x0007 // specified item is used on Pokémon
+#define EVO_LEVEL_ATK_GT_DEF 				0x0008 // Pokémon reaches the specified level with attack > defense
+#define EVO_LEVEL_ATK_EQ_DEF 				0x0009 // Pokémon reaches the specified level with attack = defense
+#define EVO_LEVEL_ATK_LT_DEF 				0x000a // Pokémon reaches the specified level with attack < defense
+#define EVO_LEVEL_SILCOON    				0x000b // Pokémon reaches the specified level with a Silcoon personality value
+#define EVO_LEVEL_CASCOON    				0x000c // Pokémon reaches the specified level with a Cascoon personality value
+#define EVO_LEVEL_NINJASK    				0x000d // Pokémon reaches the specified level (special value for Ninjask)
+#define EVO_LEVEL_SHEDINJA   				0x000e // Pokémon reaches the specified level (special value for Shedinja)
+#define EVO_BEAUTY   		   				0x000f // Pokémon levels up with beauty ≥ specified value
+#define EVO_LEVEL_FEMALE     				0x0010 // Pokémon reaches the specified level, is female
+#define EVO_LEVEL_MALE      				0x0011 // Pokémon reaches the specified level, is male
+#define EVO_LEVEL_NIGHT     				0x0012 // Pokémon reaches the specified level, is night
+#define EVO_LEVEL_DAY       				0x0013 // Pokémon reaches the specified level, is day
+#define EVO_LEVEL_DUSK      				0x0014 // Pokémon reaches the specified level, is dusk (5-6 P.M)
+#define EVO_ITEM_HOLD_DAY  		    		0x0015 // Pokémon levels up, holds specified item at day
+#define EVO_ITEM_HOLD_NIGHT 				0x0016 // Pokémon levels up, holds specified item at night
+#define EVO_MOVE           			    	0x0017 // Pokémon levels up, knows specified move
+#define EVO_MOVE_TYPE       				0x0018 // Pokémon levels up, knows move with specified type
+#define EVO_MAPSEC          				0x0019 // Pokémon levels up on specified mapsec
+#define EVO_ITEM_MALE      				    0x001a // specified item is used on a male Pokémon
+#define EVO_ITEM_FEMALE    				    0x001b // specified item is used on a female Pokémon
+#define EVO_LEVEL_RAIN     				    0x001c // Pokémon reaches the specified level while it's raining
+#define EVO_SPECIFIC_MON_IN_PARTY         	0x001d // Pokémon levels up with a specified Pokémon in party
+#define EVO_LEVEL_DARK_TYPE_MON_IN_PARTY    0x001e // Pokémon reaches the specified level with a Dark Type Pokémon in party
+#define EVO_TRADE_SPECIFIC_MON   			0x001f // Pokémon is traded for a specified Pokémon
+#define EVO_SPECIFIC_MAP   				    0x0020 // Pokémon levels up in a specific room of a specified map.
+#define EVO_MEGA_EVOLUTION					0x0021 // (change later)Not an actual evolution, used to temporarily mega evolve in battle.
+#define EVO_MOVE_MEGA_EVOLUTION		        0x0022 // Mega Evolution that checks for a move instead of held item.
 
 struct Evolution
 {
@@ -311,7 +334,7 @@ struct Evolution
     u16 targetSpecies;
 };
 
-#define EVOS_PER_MON 5
+#define EVOS_PER_MON 16 // set to 16 in case I need the shedinja byte change fix
 
 extern u8 gPlayerPartyCount;
 extern struct Pokemon gPlayerParty[PARTY_SIZE];
@@ -329,6 +352,7 @@ extern const u8 gFacilityClassToPicIndex[];
 extern const u8 gFacilityClassToTrainerClass[];
 extern const struct SpriteTemplate gSpriteTemplates_Battlers[];
 extern const u8 gPPUpGetMask[];
+extern const u16 *const gFormSpeciesIdTables[NUM_SPECIES];
 
 void ZeroBoxMonData(struct BoxPokemon *boxMon);
 void ZeroMonData(struct Pokemon *mon);
@@ -371,15 +395,15 @@ void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerSpriteId, u8 battlerPosit
 // but they are not used since some code erroneously omits the third arg.
 // u32 GetMonData(struct Pokemon *mon, s32 field, u8 *data);
 // u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data);
-
+/**/
 #ifdef IS_POKEMON_C
 u32 GetMonData(struct Pokemon *, s32, u8 *);
 u32 GetBoxMonData(struct BoxPokemon *, s32, u8 *);
 #else
 u32 GetMonData();
 u32 GetBoxMonData();
-#endif // IS_POKEMON_C
-
+#endif // IS_POKEMON_C  seems like removing this was what made it work?
+//*/ 
 void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg);
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg);
 void CopyMon(void *dest, void *src, size_t size);
@@ -387,8 +411,8 @@ u8 GiveMonToPlayer(struct Pokemon *mon);
 u8 CalculatePlayerPartyCount(void);
 u8 CalculateEnemyPartyCount(void);
 u8 GetMonsStateToDoubles(void);
-u8 GetAbilityBySpecies(u16 species, bool8 abilityNum);
-u8 GetMonAbility(struct Pokemon *mon);
+u16 GetAbilityBySpecies(u16 species, bool8 abilityNum);
+u16 GetMonAbility(struct Pokemon *mon);
 u8 GetSecretBaseTrainerPicIndex(void);
 u8 GetSecretBaseTrainerNameIndex(void);
 bool8 IsPlayerPartyAndPokemonStorageFull(void);
@@ -456,5 +480,7 @@ bool8 CheckBattleTypeGhost(struct Pokemon *mon, u8 bank);
 struct OakSpeechNidoranFStruct *OakSpeechNidoranFSetup(u8 battlePosition, bool8 enable);
 void OakSpeechNidoranFFreeResources(void);
 void *OakSpeechNidoranFGetBuffer(u8 bufferId);
+u16 GetFormSpeciesId(u16 speciesId, u8 formId);
+u8 GetFormIdFromFormSpeciesId(u16 formSpeciesId);
 
 #endif // GUARD_POKEMON_H

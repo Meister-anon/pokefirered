@@ -1513,8 +1513,9 @@
 #define FLAG_0x8FD                                                  (SYS_FLAGS + 0xFD)
 #define FLAG_0x8FE                                                  (SYS_FLAGS + 0xFE)
 #define FLAG_0x8FF                                                  (SYS_FLAGS + 0xFF)
-
-#define FLAGS_COUNT (FLAG_0x8FF + 1)
+// My New Flags
+#define FLAG_NEW_EXP_SHARE											(SYS_FLAGS + 0x100)
+#define FLAGS_COUNT (FLAG_NEW_EXP_SHARE + 1)
 
 // SPECIAL FLAGS (unknown purpose)
 #define SPECIAL_FLAGS_START 0x4000

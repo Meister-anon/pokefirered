@@ -284,6 +284,13 @@ static const u8 sItemEffect_XSpecial[8] = {
     [7] = 1,
 };
 
+static const u8 sItemEffect_XSpDef[8] = {
+    [2] = 1,
+    [5] = ITEM5_FRIENDSHIP_LOW | ITEM5_FRIENDSHIP_MID,
+    [6] = 1,
+    [7] = 1,
+};
+
 static const u8 sItemEffect_SunStone[6] = {
     [4] = ITEM4_EVO_STONE,
 };
@@ -396,10 +403,11 @@ const u8 *const gItemEffectTable[] =
     [ITEM_GUARD_SPEC - ITEM_POTION] = sItemEffect_GuardSpec,
     [ITEM_DIRE_HIT - ITEM_POTION] = sItemEffect_DireHit,
     [ITEM_X_ATTACK - ITEM_POTION] = sItemEffect_XAttack,
-    [ITEM_X_DEFEND - ITEM_POTION] = sItemEffect_XDefend,
+    [ITEM_X_DEFENSE - ITEM_POTION] = sItemEffect_XDefend,
     [ITEM_X_SPEED - ITEM_POTION] = sItemEffect_XSpeed,
     [ITEM_X_ACCURACY - ITEM_POTION] = sItemEffect_XAccuracy,
-    [ITEM_X_SPECIAL - ITEM_POTION] = sItemEffect_XSpecial,
+    [ITEM_X_SP_ATK - ITEM_POTION] = sItemEffect_XSpecial,
+    [ITEM_X_SP_DEF - ITEM_POTION] = sItemEffect_XSpDef,
     [ITEM_SUN_STONE - ITEM_POTION] = sItemEffect_SunStone,
     [ITEM_MOON_STONE - ITEM_POTION] = sItemEffect_MoonStone,
     [ITEM_FIRE_STONE - ITEM_POTION] = sItemEffect_FireStone,

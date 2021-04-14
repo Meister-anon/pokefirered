@@ -17,7 +17,7 @@ void SortAndCompactBagPocket(struct BagPocket * pocket);
 
 // Item descriptions and data
 #include "data/items.h"
-
+// don't have this file right now, guess becuase I ran clean, and haven't built my items file yet.
 u16 GetBagItemQuantity(u16 * ptr)
 {
     return gSaveBlock2Ptr->encryptionKey ^ *ptr;
@@ -38,7 +38,7 @@ void SetPcItemQuantity(u16 * ptr, u16 value)
     *ptr = value ^ 0;
 }
 
-void ApplyNewEncryptionKeyToBagItems(u32 key)
+void ApplyNewEncryptionKeyToBagItems(u32 key) //reminder need to increase bag capacity. welp that's done.
 {
     u32 i, j;
 

@@ -27,9 +27,10 @@ CeladonCity_DepartmentStore_5F_EventScript_ClerkXItems:: @ 816BC5C
 	.align 2
 CeladonCity_DepartmentStore_5F_XItems:: @ 816BC84
 	.2byte ITEM_X_ATTACK
-	.2byte ITEM_X_DEFEND
+	.2byte ITEM_X_DEFENSE
 	.2byte ITEM_X_SPEED
-	.2byte ITEM_X_SPECIAL
+	.2byte ITEM_X_SP_ATK
+	.2byte ITEM_X_SP_DEF
 	.2byte ITEM_X_ACCURACY
 	.2byte ITEM_GUARD_SPEC
 	.2byte ITEM_DIRE_HIT

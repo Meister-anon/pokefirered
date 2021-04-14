@@ -73,6 +73,10 @@
 #define T2_READ_32(ptr) ((ptr)[0] + ((ptr)[1] << 8) + ((ptr)[2] << 16) + ((ptr)[3] << 24))
 #define T2_READ_PTR(ptr) (void*) T2_READ_32(ptr)
 
+#define HIBYTE(n) (((n) >> 8) & 0xFF)
+#define LOBYTE(n) ((n) & 0xFF)
+#define HIHALF(n) (((n) & 0xFFFF0000) >> 16)
+#define LOHALF(n) ((n) & 0xFFFF)
 // This macro is required to prevent the compiler from optimizing
 // a dpad up/down check in sub_812CAD8 (fame_checker.c).
 // We suspect it was used globally.
@@ -302,7 +306,7 @@ struct SecretBaseParty
     u16 species[PARTY_SIZE];
     u16 heldItems[PARTY_SIZE];
     u8 levels[PARTY_SIZE];
-    u8 EVs[PARTY_SIZE];
+    u16 evs[PARTY_SIZE];
 };
 
 struct SecretBaseRecord
@@ -759,7 +763,7 @@ struct ExternalEventFlags
 
 } __attribute__((packed));/*size = 0x15*/
 
-#define UNION_ROOM_KB_ROW_COUNT 10
+#define UNION_ROOM_KB_ROW_COUNT 10 //find out what this is?
 
 struct SaveBlock1
 {

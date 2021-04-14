@@ -92,7 +92,7 @@
 #define MON_DATA_SPATK2            87
 #define MON_DATA_SPDEF2            88
 
-// Pokemon types
+// Pokemon types	type order found in list_menu.c
 #define TYPE_NORMAL   0x00
 #define TYPE_FIGHTING 0x01
 #define TYPE_FLYING   0x02
@@ -111,7 +111,8 @@
 #define TYPE_ICE      0x0f
 #define TYPE_DRAGON   0x10
 #define TYPE_DARK     0x11
-#define NUMBER_OF_MON_TYPES     0x12
+#define TYPE_FAIRY	  0x17 //fairy addition
+#define NUMBER_OF_MON_TYPES     0x13
 
 // Pokemon egg groups
 #define EGG_GROUP_NONE 0
@@ -210,7 +211,7 @@
 #define FRIENDSHIP_EVENT_FAINT_LARGE          9
 
 #define PARTY_SIZE 6
-#define MAX_TOTAL_EVS 510
+#define MAX_TOTAL_EVS 788
 #define UNOWN_FORM_COUNT 28
 #define BOX_NAME_LENGTH 8
 

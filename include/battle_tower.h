@@ -21,7 +21,7 @@ struct BattleTowerPokemonTemplate
     u8 heldItem;
     u8 teamFlags;
     u16 moves[4];
-    u8 evSpread;
+    u16 evSpread; //be VERY careful of capitalization!! accidentally having that "S" lower case while every version of it elsewhere was capital completely broke the build and refernces!!
     u8 nature;
 };
 

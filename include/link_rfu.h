@@ -20,15 +20,15 @@
 // RfuTgtData.gname is read as these structs.
 struct GFtgtGnameSub
 {
-    u16 language:4;
-    u16 hasNews:1;
-    u16 hasCard:1;
-    u16 unk_00_6:1;
-    u16 isChampion:1;
-    u16 hasNationalDex:1;
-    u16 gameClear:1;
-    u16 version:4;
-    u16 unk_01_6:2;
+    u16 language :4;
+    u16 hasNews :1;
+    u16 hasCard :1;
+    u16 unk_00_6 :1;
+    u16 isChampion :1;
+    u16 hasNationalDex :1;
+    u16 gameClear :1;
+    u16 version :4;
+    u16 unk_01_6 :2;
     u8 playerTrainerId[2];
 };
 
@@ -39,12 +39,12 @@ struct __attribute__((packed, aligned(2))) GFtgtGname
     // u8 gender:1;
     // u8 unk_4:3
     // u8 active:1
-    u16 species:10;
-    u16 type:6;
-    u8 activity:7;
-    u8 started:1;
-    u8 playerGender:1;
-    u8 level:7;
+    u16 species :11;
+    u16 type :6;
+    u8 activity :7;
+    u8 started :1;
+    u8 playerGender :1;
+    u8 level :7;
     u8 padding;
 }; // size: RFU_GNAME_SIZE
 
