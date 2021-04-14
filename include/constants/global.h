@@ -1,7 +1,7 @@
 #ifndef GUARD_CONSTANTS_GLOBAL_H
 #define GUARD_CONSTANTS_GLOBAL_H
 
-#define ITEM_NAME_LENGTH 14
+#define ITEM_NAME_LENGTH 18
 #define POKEMON_NAME_LENGTH 10
 #define OT_NAME_LENGTH 7
 #define MOVE_NAME_LENGTH 12
@@ -25,14 +25,14 @@
 #endif
 
 #define PC_ITEMS_COUNT      30
-#define BAG_ITEMS_COUNT     42
-#define BAG_KEYITEMS_COUNT  30
+#define BAG_ITEMS_COUNT     52
+#define BAG_KEYITEMS_COUNT  50
 #define BAG_POKEBALLS_COUNT 13
-#define BAG_TMHM_COUNT      58
-#define BAG_BERRIES_COUNT   43
+#define BAG_TMHM_COUNT      128
+#define BAG_BERRIES_COUNT   23
 #define OBJECT_EVENT_TEMPLATES_COUNT 64
 
-#define QUEST_LOG_SCENE_COUNT 4
+#define QUEST_LOG_SCENE_COUNT 2 //think this is flashbacks, cut from 4 to 2, to hopefully save space. plus everyone doesn't like the feature like I do.
 
 #define NUM_TOWER_CHALLENGE_TYPES 4
 
@@ -44,18 +44,18 @@
 #define NUM_STORYTELLER_TALES  4
 #define NUM_TRADER_ITEMS       4
 
-#define OPTIONS_BUTTON_MODE_HELP         0
-#define OPTIONS_BUTTON_MODE_LR           1
+#define OPTIONS_BUTTON_MODE_HELP         0 //may make only L call help, & use select, R, & start for ev iv screen.
+#define OPTIONS_BUTTON_MODE_LR           1 //new default for change, for iv ev status, actually may change that.
 #define OPTIONS_BUTTON_MODE_L_EQUALS_A   2
 
 #define OPTIONS_TEXT_SPEED_SLOW  0
 #define OPTIONS_TEXT_SPEED_MID   1
-#define OPTIONS_TEXT_SPEED_FAST  2
+#define OPTIONS_TEXT_SPEED_FAST  2 //new defaul
 
 #define OPTIONS_SOUND_MONO    0
 #define OPTIONS_SOUND_STEREO  1
 
-#define OPTIONS_BATTLE_STYLE_SHIFT  0
+#define OPTIONS_BATTLE_STYLE_SHIFT  0 //need to remove opponent pokemon alert from shift.  DONE!
 #define OPTIONS_BATTLE_STYLE_SET    1
 
 #define POCKET_ITEMS        1

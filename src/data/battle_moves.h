@@ -571,7 +571,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
         .priority = 0,
         .flags = FLAG_PROTECT_AFFECTED | FLAG_MAGICCOAT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED,
     },
-
+    // fairy addition need change some moves like with hma, then expand moves.
     [MOVE_BITE] =
     {
         .effect = EFFECT_FLINCH_HIT,

@@ -80,7 +80,7 @@ struct TrainerCardData
 }; /* size = 0x7BD0 */
 
 // RAM
-EWRAM_DATA struct TrainerCard gTrainerCards[4] = {0};
+EWRAM_DATA struct TrainerCard gTrainerCards[2] = {0};
 EWRAM_DATA static struct TrainerCardData *sTrainerCardDataPtr = NULL;
 
 // Function Declaration
@@ -119,8 +119,8 @@ static void BufferNameForCardBack(void);
 static void PrintNameOnCardBack(void);
 static void BufferHofDebutTime(void);
 static void PrintHofDebutTimeOnCard(void);
-static void BufferLinkBattleResults(void);
-static void PrintLinkBattleResultsOnCard(void);
+//static void BufferLinkBattleResults(void);
+//static void PrintLinkBattleResultsOnCard(void);
 static void BufferNumTrades(void);
 static void PrintTradesStringOnCard(void);
 static void BufferBerryCrushPoints(void);
@@ -354,7 +354,7 @@ static const u8 sTrainerCardProfilePhraseYPositions[] = {0x82, 0x78};
 static const u8 sTrainerCardBackNameXPositions[] = {0x8A, 0xD8};
 static const u8 sTrainerCardBackNameYPositions[] = {0xB, 0xA};
 static const u8 sTrainerCardHofDebutXPositions[] = {0xA, 0x10, 0x0, 0x0};
-static const u8 *const sLinkTrainerCardRecordStrings[] = {gText_LinkBattles, gText_LinkCableBattles};
+//static const u8 *const sLinkTrainerCardRecordStrings[] = {gText_LinkBattles, gText_LinkCableBattles};
 static const u8 sPokemonIconPalSlots[] = {5, 6, 7, 8, 9, 10};
 static const u8 sPokemonIconXOffsets[] = {0, 4, 8, 12, 16, 20};
 static const u8 sStickerPalSlots[] = {11, 12, 13, 14};
@@ -375,8 +375,8 @@ static const struct TrainerCard sLinkPlayerTrainerCardTemplate1 =
         .trainerId = 0x6072,
         .playTimeHours = 999,
         .playTimeMinutes = 59,
-        .linkBattleWins = 5535,
-        .linkBattleLosses = 5535,
+        //.linkBattleWins = 5535,
+        //.linkBattleLosses = 5535,
         .battleTowerWins = 5535,
         .battleTowerStraightWins = 5535,
         .contestsWithFriends = 55555,
@@ -415,8 +415,8 @@ static const struct TrainerCard sLinkPlayerTrainerCardTemplate2 =
         .trainerId = 0x6072,
         .playTimeHours = 999,
         .playTimeMinutes = 59,
-        .linkBattleWins = 5535,
-        .linkBattleLosses = 5535,
+    //    .linkBattleWins = 5535,
+     //   .linkBattleLosses = 5535,
         .battleTowerWins = 65535,
         .battleTowerStraightWins = 65535,
         .contestsWithFriends = 55555,
@@ -819,8 +819,8 @@ static void SetPlayerCardData(struct TrainerCard *trainerCard, u8 cardType)
 
     trainerCard->rse.trainerId = (gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0];
 
-    trainerCard->rse.linkBattleWins = GetCappedGameStat(GAME_STAT_LINK_BATTLE_WINS, 9999);
-    trainerCard->rse.linkBattleLosses = GetCappedGameStat(GAME_STAT_LINK_BATTLE_LOSSES, 9999);
+   // trainerCard->rse.linkBattleWins = GetCappedGameStat(GAME_STAT_LINK_BATTLE_WINS, 9999);
+   // trainerCard->rse.linkBattleLosses = GetCappedGameStat(GAME_STAT_LINK_BATTLE_LOSSES, 9999);
     trainerCard->rse.pokemonTrades = GetCappedGameStat(GAME_STAT_POKEMON_TRADES, 0xFFFF);
 
     trainerCard->rse.battleTowerWins = 0;
@@ -928,8 +928,8 @@ static void SetDataFromTrainerCard(void)
      || sTrainerCardDataPtr->trainerCard.rse.hofDebutSeconds != 0)
         sTrainerCardDataPtr->hasHofResult++;
 
-    if (sTrainerCardDataPtr->trainerCard.rse.linkBattleWins != 0 || sTrainerCardDataPtr->trainerCard.rse.linkBattleLosses != 0)
-        sTrainerCardDataPtr->hasLinkResults++;
+    //if (sTrainerCardDataPtr->trainerCard.rse.linkBattleWins != 0 || sTrainerCardDataPtr->trainerCard.rse.linkBattleLosses != 0)
+     //   sTrainerCardDataPtr->hasLinkResults++;
 
     if (sTrainerCardDataPtr->trainerCard.rse.pokemonTrades != 0)
         sTrainerCardDataPtr->hasTrades++;
@@ -1084,7 +1084,7 @@ static bool8 PrintAllOnCardBack(void)
         PrintHofDebutTimeOnCard();
         break;
     case 2:
-        PrintLinkBattleResultsOnCard();
+     //   PrintLinkBattleResultsOnCard();
         break;
     case 3:
         PrintTradesStringOnCard();
@@ -1113,7 +1113,7 @@ static void BufferTextForCardBack(void)
 {
     BufferNameForCardBack();
     BufferHofDebutTime();
-    BufferLinkBattleResults();
+ //   BufferLinkBattleResults();   could possibly replace with new game+ count
     BufferNumTrades();
     BufferBerryCrushPoints();
     BufferUnionRoomStats();
@@ -1305,7 +1305,7 @@ static void PrintHofDebutTimeOnCard(void)
         AddTextPrinterParameterized3(1, sTrainerCardFontIds[1], 164, 35, sTrainerCardStatColors, TEXT_SPEED_FF, sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_HOF_TIME]);
     }
 }
-
+/*
 static void BufferLinkBattleResults(void)
 {
     u8 buffer[30];
@@ -1332,7 +1332,7 @@ static void PrintLinkBattleResultsOnCard(void)
         AddTextPrinterParameterized3(1, sTrainerCardFontIds[1], 192, 51, sTrainerCardStatColors, TEXT_SPEED_FF, sTrainerCardDataPtr->strings[TRAINER_CARD_STRING_LINK_LOSSES]);
     }
 }
-
+*/
 static void BufferNumTrades(void)
 {
     if (sTrainerCardDataPtr->hasTrades)

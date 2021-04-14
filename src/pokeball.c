@@ -903,7 +903,7 @@ static void SpriteCB_PlayerMonSendOut_1(struct Sprite *sprite)
     sprite->callback = SpriteCB_PlayerMonSendOut_2;
 }
 
-#define HIBYTE(x) (((x) >> 8) & 0xFF)
+//#define HIBYTE(x) (((x) >> 8) & 0xFF)
 
 static void SpriteCB_PlayerMonSendOut_2(struct Sprite *sprite)
 {

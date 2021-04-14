@@ -17,8 +17,8 @@ struct TrainerCardRSE
     /*0x0E*/ u16 trainerId;
     /*0x10*/ u16 playTimeHours;
     /*0x12*/ u16 playTimeMinutes;
-    /*0x14*/ u16 linkBattleWins;
-    /*0x16*/ u16 linkBattleLosses;
+    /*0x14*/ //u16 linkBattleWins;
+    /*0x16*/ //u16 linkBattleLosses;
     /*0x18*/ u16 battleTowerWins;
     /*0x1A*/ u16 battleTowerStraightWins;
     /*0x1C*/ u16 contestsWithFriends;
@@ -46,11 +46,11 @@ struct TrainerCard
     /*0x54*/ u16 monSpecies[PARTY_SIZE];
 };
 
-extern struct TrainerCard gTrainerCards[4];
+extern struct TrainerCard gTrainerCards[2];
 
 void ShowPlayerTrainerCard(void (*callback)(void));
-void ShowTrainerCardInLink(u8 whoseCard, MainCallback callback);
+//void ShowTrainerCardInLink(u8 whoseCard, MainCallback callback);
 u8 GetTrainerCardStars(u8 cardId);
-void TrainerCard_GenerateCardForLinkPlayer(struct TrainerCard *trainerCard);
+//void TrainerCard_GenerateCardForLinkPlayer(struct TrainerCard *trainerCard);
 
 #endif //GUARD_TRAINER_CARD_H

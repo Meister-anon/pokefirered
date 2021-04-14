@@ -27,8 +27,6 @@ void AllocateBattleResources(void)
     gBattleResources->ai = AllocZeroed(sizeof(*gBattleResources->ai));
     gBattleResources->battleHistory = AllocZeroed(sizeof(*gBattleResources->battleHistory));
     gBattleResources->AI_ScriptsStack = AllocZeroed(sizeof(*gBattleResources->AI_ScriptsStack));
-    gLinkBattleSendBuffer = AllocZeroed(BATTLE_BUFFER_LINK_SIZE);
-    gLinkBattleRecvBuffer = AllocZeroed(BATTLE_BUFFER_LINK_SIZE);
     gBattleAnimMons_BgTilesBuffer = AllocZeroed(0x2000);
     gBattleAnimMons_BgTilemapBuffer = AllocZeroed(0x1000);
     SetBgTilemapBuffer(1, gBattleAnimMons_BgTilemapBuffer);
@@ -60,8 +58,6 @@ void FreeBattleResources(void)
         FREE_AND_SET_NULL(gBattleResources->battleHistory);
         FREE_AND_SET_NULL(gBattleResources->AI_ScriptsStack);
         FREE_AND_SET_NULL(gBattleResources);
-        FREE_AND_SET_NULL(gLinkBattleSendBuffer);
-        FREE_AND_SET_NULL(gLinkBattleRecvBuffer);
         FREE_AND_SET_NULL(gBattleAnimMons_BgTilesBuffer);
         FREE_AND_SET_NULL(gBattleAnimMons_BgTilemapBuffer);
     }

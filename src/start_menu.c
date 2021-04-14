@@ -106,8 +106,8 @@ static u8 SaveDialogCB_WaitPrintSuccessAndPlaySE(void);
 static u8 SaveDialogCB_ReturnSuccess(void);
 static u8 SaveDialogCB_WaitPrintErrorAndPlaySE(void);
 static u8 SaveDialogCB_ReturnError(void);
-static void CB2_WhileSavingAfterLinkBattle(void);
-static void task50_after_link_battle_save(u8 taskId);
+//static void CB2_WhileSavingAfterLinkBattle(void);
+//static void task50_after_link_battle_save(u8 taskId);
 static void PrintSaveStats(void);
 static void CloseSaveStatsWindow(void);
 static void CloseStartMenu(void);
@@ -843,7 +843,7 @@ static u8 SaveDialogCB_ReturnError(void)
     CloseSaveStatsWindow_();
     return SAVECB_RETURN_ERROR;
 }
-
+/*
 static void VBlankCB_WhileSavingAfterLinkBattle(void)
 {
     TransferPlttBuffer();
@@ -951,7 +951,7 @@ static void task50_after_link_battle_save(u8 taskId)
         }
     }
 }
-
+*/
 static void PrintSaveStats(void)
 {
     u8 y;

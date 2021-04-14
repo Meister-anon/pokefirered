@@ -73,6 +73,10 @@
 #define T2_READ_32(ptr) ((ptr)[0] + ((ptr)[1] << 8) + ((ptr)[2] << 16) + ((ptr)[3] << 24))
 #define T2_READ_PTR(ptr) (void*) T2_READ_32(ptr)
 
+#define HIBYTE(n) (((n) >> 8) & 0xFF)
+#define LOBYTE(n) ((n) & 0xFF)
+#define HIHALF(n) (((n) & 0xFFFF0000) >> 16)
+#define LOHALF(n) ((n) & 0xFFFF)
 // This macro is required to prevent the compiler from optimizing
 // a dpad up/down check in sub_812CAD8 (fame_checker.c).
 // We suspect it was used globally.
@@ -183,7 +187,7 @@ struct BerryCrush
 };
 
 #define PLAYER_NAME_LENGTH   7
-
+/*
 #define LINK_B_RECORDS_COUNT 5
 
 struct LinkBattleRecord
@@ -200,7 +204,7 @@ struct LinkBattleRecords
     struct LinkBattleRecord entries[LINK_B_RECORDS_COUNT];
     u8 languages[LINK_B_RECORDS_COUNT];
 };
-
+*/
 #include "constants/game_stat.h"
 #include "global.fieldmap.h"
 #include "global.berry.h"
@@ -285,7 +289,7 @@ struct SaveBlock2
     /*0x0AD*/ u8 field_AD;
     /*0x0B0*/ struct BattleTowerData battleTower;
     /*0x898*/ u16 mapView[0x100];
-    /*0xA98*/ struct LinkBattleRecords linkBattleRecords;
+    /*0xA98*/ //struct LinkBattleRecords linkBattleRecords;
     /*0xAF0*/ struct BerryCrush berryCrush;
     /*0xB00*/ struct PokemonJumpResults pokeJump;
     /*0xB10*/ struct BerryPickingResults berryPick;
@@ -302,7 +306,7 @@ struct SecretBaseParty
     u16 species[PARTY_SIZE];
     u16 heldItems[PARTY_SIZE];
     u8 levels[PARTY_SIZE];
-    u8 EVs[PARTY_SIZE];
+    u16 evs[PARTY_SIZE];
 };
 
 struct SecretBaseRecord
@@ -759,7 +763,7 @@ struct ExternalEventFlags
 
 } __attribute__((packed));/*size = 0x15*/
 
-#define UNION_ROOM_KB_ROW_COUNT 10
+#define UNION_ROOM_KB_ROW_COUNT 10 //find out what this is?
 
 struct SaveBlock1
 {

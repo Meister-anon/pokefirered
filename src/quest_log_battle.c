@@ -99,7 +99,7 @@ void TrySetQuestLogBattleEvent(void)
         Free(questLogWildBattleRecord);
     }
 }
-
+/*
 struct QuestLogStruct_LinkBattleRecord
 {
     u8 v0;
@@ -163,4 +163,4 @@ static void sub_812C334(s32 * a0, s32 * a1)
         else if (r5 != gBattleStruct->multiplayerId)
             a1[_optimized_out++] = r5;
     }
-}
+} */

@@ -73,8 +73,8 @@ static void TryCorrectShedinjaLanguage(struct Pokemon *mon);
 static void BattleMainCB1(void);
 static void CB2_QuitPokedudeBattle(void);
 static void SpriteCB_UnusedDebugSprite_Step(struct Sprite *sprite);
-static void CB2_EndLinkBattle(void);
-static void EndLinkBattleInSteps(void);
+//static void CB2_EndLinkBattle(void);
+//static void EndLinkBattleInSteps(void);
 static void SpriteCB_MoveWildMonToRight(struct Sprite *sprite);
 static void SpriteCB_WildMonShowHealthbox(struct Sprite *sprite);
 static void SpriteCB_Unused_8011E28_Step(struct Sprite *sprite);
@@ -129,7 +129,7 @@ static EWRAM_DATA u32 gUnknown_2022AE8[25] = {0};
 EWRAM_DATA u32 gBattleTypeFlags = 0;
 EWRAM_DATA u8 gBattleTerrain = 0;
 EWRAM_DATA u32 gUnknown_2022B54 = 0;
-EWRAM_DATA struct MultiBattlePokemonTx gMultiPartnerParty[3] = {0};
+//EWRAM_DATA struct MultiBattlePokemonTx gMultiPartnerParty[3] = {0};  for space I can remove multi battle too. since thats link cable which isnt availabe and i dont care about
 EWRAM_DATA u8 *gBattleAnimMons_BgTilesBuffer = NULL;
 EWRAM_DATA u8 *gBattleAnimMons_BgTilemapBuffer = NULL;
 static EWRAM_DATA u16 *sUnknownDebugSpriteDataBuffer = NULL;
@@ -155,7 +155,7 @@ EWRAM_DATA s32 gBattleMoveDamage = 0;
 EWRAM_DATA s32 gHpDealt = 0;
 EWRAM_DATA s32 gTakenDmg[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA u16 gLastUsedItem = 0;
-EWRAM_DATA u8 gLastUsedAbility = 0;
+EWRAM_DATA u16 gLastUsedAbility = 0;
 EWRAM_DATA u8 gBattlerAttacker = 0;
 EWRAM_DATA u8 gBattlerTarget = 0;
 EWRAM_DATA u8 gBattlerFainted = 0;
@@ -201,8 +201,6 @@ EWRAM_DATA u16 gExpShareExp = 0;
 EWRAM_DATA struct BattleEnigmaBerry gEnigmaBerries[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA struct BattleScripting gBattleScripting = {0};
 EWRAM_DATA struct BattleStruct *gBattleStruct = NULL;
-EWRAM_DATA u8 *gLinkBattleSendBuffer = NULL;
-EWRAM_DATA u8 *gLinkBattleRecvBuffer = NULL;
 EWRAM_DATA struct BattleResources *gBattleResources = NULL;
 EWRAM_DATA u8 gActionSelectionCursor[MAX_BATTLERS_COUNT] = {0};
 EWRAM_DATA u8 gMoveSelectionCursor[MAX_BATTLERS_COUNT] = {0};
@@ -309,8 +307,8 @@ static const s8 sPlayerThrowXTranslation[] = { -32, -16, -16, -32, -32, 0, 0, 0 
 // 10 is ×1.0 TYPE_MUL_NORMAL
 // 05 is ×0.5 TYPE_MUL_NOT_EFFECTIVE
 // 00 is ×0.0 TYPE_MUL_NO_EFFECT
-const u8 gTypeEffectiveness[336] =
-{
+const u8 gTypeEffectiveness[375] = // 336 is number of entries x 3 i.e number of efffectiveness since only super not effective and no effect are included. 
+{ // counted from ompen bracket to end of table. so subtract line end table is on from where open bracket starts (313)  then multipy by 3.
     TYPE_NORMAL, TYPE_ROCK, TYPE_MUL_NOT_EFFECTIVE,
     TYPE_NORMAL, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
     TYPE_FIRE, TYPE_FIRE, TYPE_MUL_NOT_EFFECTIVE,
@@ -422,6 +420,19 @@ const u8 gTypeEffectiveness[336] =
     TYPE_FORESIGHT, TYPE_FORESIGHT, TYPE_MUL_NO_EFFECT,
     TYPE_NORMAL, TYPE_GHOST, TYPE_MUL_NO_EFFECT,
     TYPE_FIGHTING, TYPE_GHOST, TYPE_MUL_NO_EFFECT,
+    TYPE_FAIRY, TYPE_DRAGON, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FAIRY, TYPE_DARK, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FAIRY, TYPE_STEEL, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FAIRY, TYPE_FIRE, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_FAIRY, TYPE_POISON, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_POISON, TYPE_FAIRY, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_STEEL, TYPE_FAIRY, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_DARK, TYPE_FAIRY, TYPE_MUL_SUPER_EFFECTIVE,
+    TYPE_FIGHTING, TYPE_FAIRY, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_GHOST, TYPE_FAIRY, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_BUG, TYPE_FAIRY, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_PSYCHIC, TYPE_FAIRY, TYPE_MUL_NOT_EFFECTIVE,
+    TYPE_DRAGON, TYPE_FAIRY, TYPE_MUL_NOT_EFFECTIVE,
     TYPE_ENDTABLE, TYPE_ENDTABLE, TYPE_MUL_NO_EFFECT
 };
 
@@ -445,6 +456,7 @@ const u8 gTypeNames[][TYPE_NAME_LENGTH + 1] =
     _("ICE"),
     _("DRAGON"),
     _("DARK"),
+    _("FAIRY"), //fairy addition
 };
 
 // This is a factor in how much money you get for beating a trainer.
@@ -615,9 +627,9 @@ void CB2_InitBattle(void)
     AllocateBattleResources();
     AllocateBattleSpritesData();
     AllocateMonSpritesGfx();
-    if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+    if (gBattleTypeFlags & BATTLE_TYPE_MULTI) //n Generation III, up to four players can battle with each other in a Multi Battle via Game Link Cable by choosing the "Multi Battle" mode in the Pokémon Cable Club Colosseum.
     {
-        HandleLinkBattleSetup();
+        //HandleLinkBattleSetup();
         SetMainCallback2(CB2_PreInitMultiBattle);
         gBattleCommunication[MULTIUSE_STATE] = 0;
     }
@@ -691,7 +703,7 @@ static void CB2_InitBattleInternal(void)
     SetVBlankCallback(VBlankCB_Battle);
     SetUpBattleVars();
     if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
-        SetMainCallback2(CB2_HandleStartMultiBattle);
+        SetMainCallback2(CB2_HandleStartMultiBattle); /*
     else
         SetMainCallback2(CB2_HandleStartBattle);
     if (!(gBattleTypeFlags & BATTLE_TYPE_LINK))
@@ -702,7 +714,7 @@ static void CB2_InitBattleInternal(void)
     gMain.inBattle = TRUE;
     for (i = 0; i < PARTY_SIZE; ++i)
         AdjustFriendship(&gPlayerParty[i], 3);
-    gBattleCommunication[MULTIUSE_STATE] = 0;
+    gBattleCommunication[MULTIUSE_STATE] = 0; */
 }
 
 #define BUFFER_PARTY_VS_SCREEN_STATUS(party, flags, i)              \
@@ -867,7 +879,7 @@ static void SetAllPlayersBerryData(void)
         }
     }
 }
-
+/*
 static void LinkBattleComputeBattleTypeFlags(u8 numPlayers, u8 multiPlayerId)
 {
     u8 found = 0;
@@ -974,7 +986,7 @@ static void CB2_HandleStartBattle(void)
             u8 taskId;
 
             ResetBlockReceivedFlags();
-            LinkBattleComputeBattleTypeFlags(2, playerMultiplayerId);
+            //LinkBattleComputeBattleTypeFlags(2, playerMultiplayerId);
             SetAllPlayersBerryData();
             taskId = CreateTask(InitLinkBattleVsScreen, 0);
             gTasks[taskId].data[1] = 270;
@@ -1067,7 +1079,7 @@ static void CB2_HandleStartBattle(void)
             ++gBattleCommunication[MULTIUSE_STATE];
         break;
     }
-}
+} */
 
 static void PrepareOwnMultiPartnerBuffer(void)
 {
@@ -1216,7 +1228,7 @@ static void CB2_HandleStartMultiBattle(void)
             if (gWirelessCommType)
                 CreateWirelessStatusIndicatorSprite(0, 0);
         }
-        break;
+        break; /*
     case 2:
         if ((GetBlockReceivedStatus() & 0xF) == 0xF)
         {
@@ -1225,7 +1237,7 @@ static void CB2_HandleStartMultiBattle(void)
             SetAllPlayersBerryData();
             SetDeoxysStats();
             memcpy(gDecompressionBuffer, gPlayerParty, sizeof(struct Pokemon) * 3);
-            taskId = CreateTask(InitLinkBattleVsScreen, 0);
+           // taskId = CreateTask(InitLinkBattleVsScreen, 0);
             gTasks[taskId].data[1] = 270;
             gTasks[taskId].data[2] = 90;
             gTasks[taskId].data[5] = 0;
@@ -1252,11 +1264,11 @@ static void CB2_HandleStartMultiBattle(void)
             ZeroPlayerPartyMons();
             ZeroEnemyPartyMons();
             ++gBattleCommunication[MULTIUSE_STATE];
-        }
+        } 
         else
         {
             break;
-        }
+        } */
         // fall through
     case 3:
         if (IsLinkTaskFinished())
@@ -1698,7 +1710,7 @@ static void BufferPartyVsScreenHealth_AtEnd(u8 taskId)
     BUFFER_PARTY_VS_SCREEN_STATUS(party2, r7, i);
     gTasks[taskId].data[4] = r7;
 }
-
+/*
 void CB2_InitEndLinkBattle(void)
 {
     s32 i;
@@ -1795,7 +1807,7 @@ static void EndLinkBattleInSteps(void)
         break;
     }
 }
-
+*/
 u32 GetBattleBgAttribute(u8 arrayId, u8 caseId)
 {
     u32 ret = 0;
@@ -3343,7 +3355,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
      && FlagGet(FLAG_BADGE03_GET)
      && GetBattlerSide(battler1) == B_SIDE_PLAYER)
         speedBattler1 = (speedBattler1 * 110) / 100;
-    if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
+    if (holdEffect == HOLD_EFFECT_MACHO_BRACE || HOLD_EFFECT_ULTIMA_BRACE)
         speedBattler1 /= 2;
     if (gBattleMons[battler1].status1 & STATUS1_PARALYSIS)
         speedBattler1 /= 4;
@@ -3368,7 +3380,7 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
      && FlagGet(FLAG_BADGE03_GET)
      && GetBattlerSide(battler2) == B_SIDE_PLAYER)
         speedBattler2 = (speedBattler2 * 110) / 100;
-    if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
+    if (holdEffect == HOLD_EFFECT_MACHO_BRACE || HOLD_EFFECT_ULTIMA_BRACE)
         speedBattler2 /= 2;
     if (gBattleMons[battler2].status1 & STATUS1_PARALYSIS)
         speedBattler2 /= 4;
@@ -3623,7 +3635,7 @@ static void RunTurnActionsFunctions(void)
 }
 
 static void HandleEndTurn_BattleWon(void)
-{
+{/*
     gCurrentActionFuncId = 0;
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
@@ -3631,8 +3643,8 @@ static void HandleEndTurn_BattleWon(void)
         gBattlerAttacker = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
         gBattlescriptCurrInstr = BattleScript_LinkBattleWonOrLost;
         gBattleOutcome &= ~(B_OUTCOME_LINK_BATTLE_RAN);
-    }
-    else if (gBattleTypeFlags & (BATTLE_TYPE_TRAINER_TOWER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER))
+    }*/
+    if (gBattleTypeFlags & (BATTLE_TYPE_TRAINER_TOWER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER))
     {
         BattleStopLowHpSound();
         PlayBGM(MUS_VICTORY_TRAINER);
@@ -3666,7 +3678,7 @@ static void HandleEndTurn_BattleWon(void)
 }
 
 static void HandleEndTurn_BattleLost(void)
-{
+{/*
     gCurrentActionFuncId = 0;
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
@@ -3675,11 +3687,11 @@ static void HandleEndTurn_BattleLost(void)
         gBattlescriptCurrInstr = BattleScript_LinkBattleWonOrLost;
         gBattleOutcome &= ~(B_OUTCOME_LINK_BATTLE_RAN);
     }
-    else
+    else */
     {
-        if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL)
+        if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL) // very useful keep in mind.
         {
-            if (GetRivalBattleFlags() & RIVAL_BATTLE_HEAL_AFTER)
+            if (GetRivalBattleFlags() & RIVAL_BATTLE_HEAL_AFTER) // could use for heals, or for gameover screen.
                 gBattleCommunication[MULTISTRING_CHOOSER] = 1; // Dont do white out text
             else
                 gBattleCommunication[MULTISTRING_CHOOSER] = 2; // Do white out text
@@ -3757,10 +3769,10 @@ static void HandleEndTurn_FinishBattle(void)
     }
 }
 
-static void FreeResetData_ReturnToOvOrDoEvolutions(void)
-{
+static void FreeResetData_ReturnToOvOrDoEvolutions(void) //  this causes end battle, and starts evolutions, need to make one for in battle, 
+{ // the way this is setup to work on palettefade causes it to happen one after another, return to overworld causes palette fade the else make evo happen during palette fade.
     if (!gPaletteFade.active)
-    {
+    { // Ok it wasn't that simple for some reason, so this leads to one function, which leads to another that actually does the palette fade that triggers the evo...
         ResetSpriteData();
         if (gLeveledUpInBattle == 0 || gBattleOutcome != B_OUTCOME_WON)
             gBattleMainFunc = ReturnFromBattleToOverworld;
@@ -3776,11 +3788,11 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
     }
 }
 
-static void TryEvolvePokemon(void)
-{
-    s32 i;
-
-    while (gLeveledUpInBattle != 0)
+static void TryEvolvePokemon(void) //want battle evolution for player and opponenet for enemy need to work out how to give them exp.
+{ //     after they have exp need set function to make it feel real that they would level up i.e they aren't starting from 0.
+    s32 i; //  for that make random function that would get their needed exp to level and then random divide that by either 2, 3, or 4 to increase their chance of lvl in battle.
+    // player can use this and the above function to evolve, but enemy needs a specific one, that won't take out of battle, make it so if they can evolve they will. 
+    while (gLeveledUpInBattle != 0) // use CFRU mega evolve for opponent.
     {
         for (i = 0; i < PARTY_SIZE; ++i)
         {

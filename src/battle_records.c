@@ -30,7 +30,7 @@ static void ResetGpu(void);
 static void StopAllRunningTasks(void);
 static void EnableDisplay(void);
 static void ResetBGPos(void);
-static void PrintBattleRecords(void);
+//static void PrintBattleRecords(void);
 static void CommitWindow(u8 windowId);
 static void LoadFrameGfxOnBg(u8 bgId);
 
@@ -135,11 +135,11 @@ static void MainCB2_SetUp(void)
         SetVBlankCallback(VBlankCB);
         if (gSpecialVar_0x8004)
             PrintTrainerTowerRecords();
-        else
+        /*else
             PrintBattleRecords();
         CreateTask(Task_WaitFadeIn, 8);
         SetMainCallback2(MainCB2);
-        gMain.state = 0;
+        gMain.state = 0; */
         break;
     }
 }
@@ -270,7 +270,7 @@ static void ResetBGPos(void)
     ChangeBgX(3, 0, 0);
     ChangeBgY(3, 0, 0);
 }
-
+/*
 static void ClearLinkBattleRecord(struct LinkBattleRecord *record)
 {
     CpuFill16(0, record, sizeof(*record));
@@ -553,7 +553,7 @@ static void PrintBattleRecords(void)
         PrintOpponentBattleRecord(&gSaveBlock2Ptr->linkBattleRecords.entries[i], 0x3D + 14 * i);
     CommitWindow(0);
 }
-
+*/
 static void CommitWindow(u8 windowId)
 {
     PutWindowTilemap(windowId);

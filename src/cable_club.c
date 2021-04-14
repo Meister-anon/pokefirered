@@ -316,7 +316,7 @@ static void Task_LinkupSlave_2(u8 taskId)
                 gFieldLinkPlayerCount = GetLinkPlayerCount_2();
                 gLocalLinkPlayerId = GetMultiplayerId();
                 sub_800A900(gFieldLinkPlayerCount);
-                TrainerCard_GenerateCardForLinkPlayer((void*)gBlockSendBuffer);
+            //    TrainerCard_GenerateCardForLinkPlayer((void*)gBlockSendBuffer);
                 gTasks[taskId].func = Task_Linkup_6a;
             }
         }
@@ -367,7 +367,7 @@ static void Task_LinkupMaster_6(u8 taskId)
             gFieldLinkPlayerCount = GetLinkPlayerCount_2();
             gLocalLinkPlayerId = GetMultiplayerId();
             sub_800A900(gFieldLinkPlayerCount);
-            TrainerCard_GenerateCardForLinkPlayer((void*)gBlockSendBuffer);
+            //TrainerCard_GenerateCardForLinkPlayer((void*)gBlockSendBuffer);
             gTasks[taskId].func = Task_Linkup_6a;
             Link_PrepareCmd0xCCCC_Rfu0xA100(2);
         }
@@ -720,7 +720,7 @@ static void sub_8081624(void)
         break;
     }
 }
-
+/*
 void CB2_ReturnFromCableClubBattle(void)
 {
     gBattleTypeFlags &= (u16)~BATTLE_TYPE_20;
@@ -769,7 +769,7 @@ void ExitLinkRoom(void)
 {
     QueueExitLinkRoomKey();
 }
-
+*/
 static void Task_EnterCableClubSeat(u8 taskId)
 {
     struct Task * task = &gTasks[taskId];
@@ -916,11 +916,11 @@ static void Debug_CreateTaskEnterCableClubSeat(void)
     CreateTask(Task_EnterCableClubSeat, 80);
     ScriptContext1_Stop();
 }
-
+/*
 void Script_ShowLinkTrainerCard(void)
 {
     ShowTrainerCardInLink(gSpecialVar_0x8006, CB2_ReturnToFieldContinueScriptPlayMapMusic);
-}
+}*/
 
 bool32 GetSeeingLinkPlayerCardMsg(u8 who)
 {

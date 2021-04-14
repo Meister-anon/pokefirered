@@ -185,14 +185,8 @@ void SetControllerToPlayer(void)
 static void PlayerBufferExecCompleted(void)
 {
     gBattlerControllerFuncs[gActiveBattler] = PlayerBufferRunCommand;
-    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
-    {
-        u8 playerId = GetMultiplayerId();
+    if (!(gBattleTypeFlags & BATTLE_TYPE_LINK))
 
-        PrepareBufferDataTransferLink(2, 4, &playerId);
-        gBattleBufferA[gActiveBattler][0] = CONTROLLER_TERMINATOR_NOP;
-    }
-    else
     {
         gBattleControllerExecFlags &= ~gBitTable[gActiveBattler];
     }
@@ -801,7 +795,7 @@ static void SetLinkBattleEndCallbacks(void)
             m4aSongNumStop(SE_LOW_HEALTH);
             gMain.inBattle = 0;
             gMain.callback1 = gPreBattleCallback1;
-            SetMainCallback2(CB2_InitEndLinkBattle);
+         //   SetMainCallback2(CB2_InitEndLinkBattle);
             FreeAllWindowBuffers();
         }
     }
@@ -810,10 +804,10 @@ static void SetLinkBattleEndCallbacks(void)
         m4aSongNumStop(SE_LOW_HEALTH);
         gMain.inBattle = 0;
         gMain.callback1 = gPreBattleCallback1;
-        SetMainCallback2(CB2_InitEndLinkBattle);
+      //  SetMainCallback2(CB2_InitEndLinkBattle);
         FreeAllWindowBuffers();
     }
-}
+} 
 
 void SetBattleEndCallbacks(void)
 {
@@ -2464,7 +2458,8 @@ static void PlayerHandleChoosePokemon(void)
     gTasks[gBattleControllerData[gActiveBattler]].data[0] = gBattleBufferA[gActiveBattler][1] & 0xF;
     *(&gBattleStruct->battlerPreventingSwitchout) = gBattleBufferA[gActiveBattler][1] >> 4;
     *(&gBattleStruct->playerPartyIdx) = gBattleBufferA[gActiveBattler][2];
-    *(&gBattleStruct->abilityPreventingSwitchout) = gBattleBufferA[gActiveBattler][3];
+    //*(&gBattleStruct->abilityPreventingSwitchout) = gBattleBufferA[gActiveBattler][3];
+    *(&gBattleStruct->abilityPreventingSwitchout) = (gBattleBufferA[gActiveBattler][3] & 0xFF) | (gBattleBufferA[gActiveBattler][7] << 8);  //u16 abilities
     for (i = 0; i < 3; ++i)
         gBattlePartyCurrentOrder[i] = gBattleBufferA[gActiveBattler][4 + i];
     BeginNormalPaletteFade(0xFFFFFFFF, 0, 0, 0x10, RGB_BLACK);

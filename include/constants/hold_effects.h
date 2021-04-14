@@ -68,5 +68,8 @@
 #define HOLD_EFFECT_METAL_POWDER   64
 #define HOLD_EFFECT_THICK_CLUB     65
 #define HOLD_EFFECT_STICK          66
+#define HOLD_EFFECT_FAIRY_POWER	   67 //fairy addition
+#define HOLD_EFFECT_ULTIMA_BRACE   68 // block exp multiply ev gain *exp=0
+#define HOLD_EFFECT_EV_SHACKLES	   69 // block ev gain, either just that with 0 drawback or double exp gain.
 
 #endif // GUARD_HOLD_EFFECTS_H

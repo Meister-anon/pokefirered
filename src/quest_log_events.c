@@ -49,14 +49,14 @@ static u16 *BufferQuestLogData_TookHeldItem(u16 *, const u16 *);
 static u16 *BufferQuestLogData_SwappedHeldItem(u16 *, const u16 *);
 static u16 *BufferQuestLogData_SwappedHeldItemFromPC(u16 *, const u16 *);
 static u16 *BufferQuestLogData_UsedPkmnCenter(u16 *, const u16 *);
-static u16 *BufferQuestLogData_LinkTraded(u16 *, const u16 *);
-static u16 *BufferQuestLogData_LinkBattledSingle(u16 *, const u16 *);
-static u16 *BufferQuestLogData_LinkBattledDouble(u16 *, const u16 *);
-static u16 *BufferQuestLogData_LinkBattledMulti(u16 *, const u16 *);
+//static u16 *BufferQuestLogData_LinkTraded(u16 *, const u16 *);
+//static u16 *BufferQuestLogData_LinkBattledSingle(u16 *, const u16 *);
+//static u16 *BufferQuestLogData_LinkBattledDouble(u16 *, const u16 *);
+//static u16 *BufferQuestLogData_LinkBattledMulti(u16 *, const u16 *);
 static u16 *BufferQuestLogData_UsedUnionRoom(u16 *, const u16 *);
 static u16 *BufferQuestLogData_UsedUnionRoomChat(u16 *, const u16 *);
-static u16 *BufferQuestLogData_LinkTradedUnionRoom(u16 *, const u16 *);
-static u16 *BufferQuestLogData_LinkBattledUnionRoom(u16 *, const u16 *);
+//static u16 *BufferQuestLogData_LinkTradedUnionRoom(u16 *, const u16 *);
+//static u16 *BufferQuestLogData_LinkBattledUnionRoom(u16 *, const u16 *);
 static u16 *BufferQuestLogData_SwitchedMonsBetweenBoxes(u16 *, const u16 *);
 static u16 *BufferQuestLogData_SwitchedMonsWithinBox(u16 *, const u16 *);
 static u16 *BufferQuestLogData_SwitchedPartyMonForPCMon(u16 *, const u16 *);
@@ -87,14 +87,14 @@ static const u16 *BufferQuestLogText_TookHeldItem(const u16 *);
 static const u16 *BufferQuestLogText_SwappedHeldItem(const u16 *);
 static const u16 *BufferQuestLogText_SwappedHeldItemFromPC(const u16 *);
 static const u16 *BufferQuestLogText_UsedPkmnCenter(const u16 *);
-static const u16 *BufferQuestLogText_LinkTraded(const u16 *);
-static const u16 *BufferQuestLogText_LinkBattledSingle(const u16 *);
-static const u16 *BufferQuestLogText_LinkBattledDouble(const u16 *);
-static const u16 *BufferQuestLogText_LinkBattledMulti(const u16 *);
+//static const u16 *BufferQuestLogText_LinkTraded(const u16 *);
+//static const u16 *BufferQuestLogText_LinkBattledSingle(const u16 *);
+//static const u16 *BufferQuestLogText_LinkBattledDouble(const u16 *);
+//static const u16 *BufferQuestLogText_LinkBattledMulti(const u16 *);
 static const u16 *BufferQuestLogText_UsedUnionRoom(const u16 *);
 static const u16 *BufferQuestLogText_UsedUnionRoomChat(const u16 *);
-static const u16 *BufferQuestLogText_LinkTradedUnionRoom(const u16 *);
-static const u16 *BufferQuestLogText_LinkBattledUnionRoom(const u16 *);
+//static const u16 *BufferQuestLogText_LinkTradedUnionRoom(const u16 *);
+//static const u16 *BufferQuestLogText_LinkBattledUnionRoom(const u16 *);
 static const u16 *BufferQuestLogText_SwitchedMonsBetweenBoxes(const u16 *);
 static const u16 *BufferQuestLogText_SwitchedMonsWithinBox(const u16 *);
 static const u16 *BufferQuestLogText_SwitchedPartyMonForPCMon(const u16 *);
@@ -134,14 +134,14 @@ static u16 *(*const sQuestLogStorageCBs[])(u16 *, const u16 *) = {
     [QL_EVENT_SWAPPED_HELD_ITEM]             = BufferQuestLogData_SwappedHeldItem,
     [QL_EVENT_SWAPPED_HELD_ITEM_PC]          = BufferQuestLogData_SwappedHeldItemFromPC,
     [QL_EVENT_USED_PKMN_CENTER]              = BufferQuestLogData_UsedPkmnCenter,
-    [QL_EVENT_LINK_TRADED]                   = BufferQuestLogData_LinkTraded,
-    [QL_EVENT_LINK_BATTLED_SINGLE]           = BufferQuestLogData_LinkBattledSingle,
-    [QL_EVENT_LINK_BATTLED_DOUBLE]           = BufferQuestLogData_LinkBattledDouble,
-    [QL_EVENT_LINK_BATTLED_MULTI]            = BufferQuestLogData_LinkBattledMulti,
+  //  [QL_EVENT_LINK_TRADED]                   = BufferQuestLogData_LinkTraded,
+  //  [QL_EVENT_LINK_BATTLED_SINGLE]           = BufferQuestLogData_LinkBattledSingle,
+  //  [QL_EVENT_LINK_BATTLED_DOUBLE]           = BufferQuestLogData_LinkBattledDouble,
+  //  [QL_EVENT_LINK_BATTLED_MULTI]            = BufferQuestLogData_LinkBattledMulti,
     [QL_EVENT_USED_UNION_ROOM]               = BufferQuestLogData_UsedUnionRoom,
     [QL_EVENT_USED_UNION_ROOM_CHAT]          = BufferQuestLogData_UsedUnionRoomChat,
-    [QL_EVENT_LINK_TRADED_UNION]             = BufferQuestLogData_LinkTradedUnionRoom,
-    [QL_EVENT_LINK_BATTLED_UNION]            = BufferQuestLogData_LinkBattledUnionRoom,
+    //[QL_EVENT_LINK_TRADED_UNION]             = BufferQuestLogData_LinkTradedUnionRoom,
+  //  [QL_EVENT_LINK_BATTLED_UNION]            = BufferQuestLogData_LinkBattledUnionRoom,
     [QL_EVENT_SWITCHED_MONS_BETWEEN_BOXES]   = BufferQuestLogData_SwitchedMonsBetweenBoxes,
     [QL_EVENT_SWITCHED_MONS_WITHIN_BOX]      = BufferQuestLogData_SwitchedMonsWithinBox,
     [QL_EVENT_SWITCHED_PARTY_MON_FOR_PC_MON] = BufferQuestLogData_SwitchedPartyMonForPCMon,
@@ -477,14 +477,14 @@ static const u16 *(*const sQuestLogEventTextBufferCBs[])(const u16 *) = {
     [QL_EVENT_SWAPPED_HELD_ITEM]             = BufferQuestLogText_SwappedHeldItem,
     [QL_EVENT_SWAPPED_HELD_ITEM_PC]          = BufferQuestLogText_SwappedHeldItemFromPC,
     [QL_EVENT_USED_PKMN_CENTER]              = BufferQuestLogText_UsedPkmnCenter,
-    [QL_EVENT_LINK_TRADED]                   = BufferQuestLogText_LinkTraded,
-    [QL_EVENT_LINK_BATTLED_SINGLE]           = BufferQuestLogText_LinkBattledSingle,
-    [QL_EVENT_LINK_BATTLED_DOUBLE]           = BufferQuestLogText_LinkBattledDouble,
-    [QL_EVENT_LINK_BATTLED_MULTI]            = BufferQuestLogText_LinkBattledMulti,
+ //   [QL_EVENT_LINK_TRADED]                   = BufferQuestLogText_LinkTraded,
+  //  [QL_EVENT_LINK_BATTLED_SINGLE]           = BufferQuestLogText_LinkBattledSingle,
+  //  [QL_EVENT_LINK_BATTLED_DOUBLE]           = BufferQuestLogText_LinkBattledDouble,
+  //  [QL_EVENT_LINK_BATTLED_MULTI]            = BufferQuestLogText_LinkBattledMulti,
     [QL_EVENT_USED_UNION_ROOM]               = BufferQuestLogText_UsedUnionRoom,
     [QL_EVENT_USED_UNION_ROOM_CHAT]          = BufferQuestLogText_UsedUnionRoomChat,
-    [QL_EVENT_LINK_TRADED_UNION]             = BufferQuestLogText_LinkTradedUnionRoom,
-    [QL_EVENT_LINK_BATTLED_UNION]            = BufferQuestLogText_LinkBattledUnionRoom,
+ //   [QL_EVENT_LINK_TRADED_UNION]             = BufferQuestLogText_LinkTradedUnionRoom,
+ //   [QL_EVENT_LINK_BATTLED_UNION]            = BufferQuestLogText_LinkBattledUnionRoom,
     [QL_EVENT_SWITCHED_MONS_BETWEEN_BOXES]   = BufferQuestLogText_SwitchedMonsBetweenBoxes,
     [QL_EVENT_SWITCHED_MONS_WITHIN_BOX]      = BufferQuestLogText_SwitchedMonsWithinBox,
     [QL_EVENT_SWITCHED_PARTY_MON_FOR_PC_MON] = BufferQuestLogText_SwitchedPartyMonForPCMon,
@@ -1083,7 +1083,7 @@ static const u8 *const sBattleOutcomeTexts[] = {
     gText_QuestLog_Loss,
     gText_QuestLog_Draw
 };
-
+/*
 static u16 *BufferQuestLogData_LinkBattledSingle(u16 *a0, const u16 *eventData)
 {
     a0[0] = QL_EVENT_LINK_BATTLED_SINGLE;
@@ -1166,7 +1166,7 @@ static const u16 *BufferQuestLogText_LinkBattledMulti(const u16 *a0)
     a0 += 13;
     return a0;
 }
-
+*/
 static u16 *BufferQuestLogData_UsedUnionRoom(u16 *a0, const u16 *eventData)
 {
     a0[0] = QL_EVENT_USED_UNION_ROOM;
@@ -1194,7 +1194,7 @@ static const u16 *BufferQuestLogText_UsedUnionRoomChat(const u16 *a0)
     a0 += 2;
     return a0;
 }
-
+/*
 static u16 *BufferQuestLogData_LinkTradedUnionRoom(u16 *a0, const u16 *eventData)
 {
     u8 *r4 = (u8 *)(a0 + 4);
@@ -1240,7 +1240,7 @@ static const u16 *BufferQuestLogText_LinkBattledUnionRoom(const u16 *a0)
     a0 += 6;
     return a0;
 }
-
+*/
 static u16 *BufferQuestLogData_SwitchedMonsBetweenBoxes(u16 *a0, const u16 *eventData)
 {
     a0 = sub_8113DE0(QL_EVENT_SWITCHED_MONS_BETWEEN_BOXES, a0);

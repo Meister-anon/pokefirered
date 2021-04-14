@@ -15,19 +15,19 @@
 #include "constants/abilities.h"
 #include "constants/battle.h"
 
-static EWRAM_DATA u8 sLinkSendTaskId = 0;
-static EWRAM_DATA u8 sLinkReceiveTaskId = 0;
+//static EWRAM_DATA u8 sLinkSendTaskId = 0;
+//static EWRAM_DATA u8 sLinkReceiveTaskId = 0;
 static EWRAM_DATA u8 gUnknown_202286E = 0;
 EWRAM_DATA struct UnusedControllerStruct gUnknown_2022870 = {0};
 static EWRAM_DATA u8 sBattleBuffersTransferData[0x100] = {0};
 
-static void CreateTasksForSendRecvLinkBuffers(void);
-static void InitLinkBtlControllers(void);
+//static void CreateTasksForSendRecvLinkBuffers(void);
+//static void InitLinkBtlControllers(void);
 static void InitSinglePlayerBtlControllers(void);
 static void SetBattlePartyIds(void);
-static void Task_HandleSendLinkBuffersData(u8 taskId);
-static void Task_HandleCopyReceivedLinkBuffersData(u8 taskId);
-
+//static void Task_HandleSendLinkBuffersData(u8 taskId);
+//static void Task_HandleCopyReceivedLinkBuffersData(u8 taskId);
+/*
 void HandleLinkBattleSetup(void)
 {
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
@@ -39,7 +39,7 @@ void HandleLinkBattleSetup(void)
         CreateTask(Task_WaitForReceivedRemoteLinkPlayers5SecondTimeout, 0);
         CreateTasksForSendRecvLinkBuffers();
     }
-}
+} */
 
 void SetUpBattleVars(void)
 {
@@ -53,7 +53,7 @@ void SetUpBattleVars(void)
         gActionSelectionCursor[i] = 0;
         gMoveSelectionCursor[i] = 0;
     }
-    HandleLinkBattleSetup();
+ //   HandleLinkBattleSetup();
     gBattleControllerExecFlags = 0;
     ClearBattleAnimationVars();
     ClearBattleMonForms();
@@ -66,9 +66,6 @@ void InitBtlControllers(void)
 {
     s32 i;
 
-    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
-        InitLinkBtlControllers();
-    else
         InitSinglePlayerBtlControllers();
     SetBattlePartyIds();
     if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
@@ -132,7 +129,7 @@ static void InitSinglePlayerBtlControllers(void)
         }
     }
 }
-
+/*
 static void InitLinkBtlControllers(void)
 {
     s32 i;
@@ -262,7 +259,7 @@ static void InitLinkBtlControllers(void)
         gBattlersCount = MAX_BATTLERS_COUNT;
     }
 }
-
+*/
 static void SetBattlePartyIds(void)
 {
     s32 i, j;
@@ -336,7 +333,7 @@ static void PrepareBufferDataTransfer(u8 bufferId, u8 *data, u16 size)
 
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
-        PrepareBufferDataTransferLink(bufferId, size, data);
+  //      PrepareBufferDataTransferLink(bufferId, size, data);
     }
     else
     {
@@ -353,7 +350,7 @@ static void PrepareBufferDataTransfer(u8 bufferId, u8 *data, u16 size)
         }
     }
 }
-
+/*
 static void CreateTasksForSendRecvLinkBuffers(void)
 {
     sLinkSendTaskId = CreateTask(Task_HandleSendLinkBuffersData, 0);
@@ -479,8 +476,8 @@ static void Task_HandleSendLinkBuffersData(u8 taskId)
         }
         break;
     }
-}
-
+}*/
+/*
 void TryReceiveLinkBattleData(void)
 {
     u8 i;
@@ -557,7 +554,7 @@ static void Task_HandleCopyReceivedLinkBuffersData(u8 taskId)
         }
         gTasks[taskId].data[15] = gTasks[taskId].data[15] + blockSize + LINK_BUFF_DATA;
     }
-}
+} */
 
 void BtlController_EmitGetMonData(u8 bufferId, u8 requestId, u8 monToCheck)
 {
@@ -830,14 +827,15 @@ void BtlController_EmitChooseItem(u8 bufferId, u8 *arg1)
     PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
 }
 
-void BtlController_EmitChoosePokemon(u8 bufferId, u8 caseId, u8 arg2, u8 abilityId, u8 *arg4)
+void BtlController_EmitChoosePokemon(u8 bufferId, u8 caseId, u8 arg2, u16 abilityId, u8 *arg4)
 {
     s32 i;
 
     sBattleBuffersTransferData[0] = CONTROLLER_CHOOSEPOKEMON;
     sBattleBuffersTransferData[1] = caseId;
     sBattleBuffersTransferData[2] = arg2;
-    sBattleBuffersTransferData[3] = abilityId;
+    sBattleBuffersTransferData[3] = LOBYTE(abilityId);
+    sBattleBuffersTransferData[7] = HIBYTE(abilityId);
     for (i = 0; i < 3; ++i)
         sBattleBuffersTransferData[4 + i] = arg4[i];
     PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 8);  // Only 7 bytes were written.

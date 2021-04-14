@@ -8,6 +8,6 @@ void Task_StartMenuHandleInput(u8 taskId);
 void SetUpReturnToStartMenu(void);
 void ShowStartMenu(void);
 void Field_AskSaveTheGame(void);
-void CB2_SetUpSaveAfterLinkBattle(void);
+//void CB2_SetUpSaveAfterLinkBattle(void);
 
 #endif // GUARD_START_MENU_H

@@ -255,7 +255,7 @@ SilphCo_6F_EventScript_ItemHPUp:: @ 81BE8C1
 	end
 
 SilphCo_6F_EventScript_ItemXSpecial:: @ 81BE8CE
-	finditem ITEM_X_SPECIAL
+	finditem ITEM_X_SP_ATK
 	end
 
 SilphCo_7F_EventScript_ItemCalcium:: @ 81BE8DB
@@ -423,7 +423,7 @@ MtMoon_B2F_EventScript_ItemAntidote:: @ 81BEAE3
 	end
 
 Route11_EventScript_ItemXDefend:: @ 81BEAF0
-	finditem ITEM_X_DEFEND
+	finditem ITEM_X_DEFENSE
 	end
 
 Route9_EventScript_ItemBurnHeal:: @ 81BEAFD

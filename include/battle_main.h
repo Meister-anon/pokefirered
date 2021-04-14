@@ -24,7 +24,7 @@ struct MultiBattlePokemonTx
 };
 
 #define TYPE_NAME_LENGTH 6
-#define ABILITY_NAME_LENGTH 12
+#define ABILITY_NAME_LENGTH 14
 
 // defines for the u8 array gTypeEffectiveness
 #define TYPE_EFFECT_ATK_TYPE(i)((gTypeEffectiveness[i + 0]))
@@ -57,7 +57,7 @@ extern const u8 gStatusConditionString_IceJpn[8];
 extern const u8 gStatusConditionString_ConfusionJpn[8];
 extern const u8 gStatusConditionString_LoveJpn[8];
 extern const u8 *const gStatusConditionStringsTable[7][2];
-extern const u8 gTypeEffectiveness[336];
+extern const u8 gTypeEffectiveness[375]; //fairy addition
 extern const struct TrainerMoney gTrainerMoneyTable[];
 extern const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT];
 extern const u8 gAbilityNames[ABILITIES_COUNT][ABILITY_NAME_LENGTH + 1];
@@ -68,7 +68,7 @@ void FreeRestoreBattleData(void);
 void VBlankCB_Battle(void);
 void SpriteCB_VsLetterDummy(struct Sprite *sprite);
 void SpriteCB_VsLetterInit(struct Sprite *sprite);
-void CB2_InitEndLinkBattle(void);
+//void CB2_InitEndLinkBattle(void);
 u32 GetBattleBgAttribute(u8 arrayId, u8 caseId);
 void SpriteCB_EnemyMon(struct Sprite *sprite);
 void SpriteCallbackDummy2(struct Sprite *sprite);

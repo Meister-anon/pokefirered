@@ -4,6 +4,6 @@
 #include "global.h"
 
 void TrySetQuestLogBattleEvent(void);
-void TrySetQuestLogLinkBattleEvent(void);
+//void TrySetQuestLogLinkBattleEvent(void);
 
 #endif // GUARD_QUEST_LOG_BATTLE_H

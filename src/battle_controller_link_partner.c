@@ -361,14 +361,8 @@ static void SwitchIn_TryShinyAnim(void)
 static void LinkPartnerBufferExecCompleted(void)
 {
     gBattlerControllerFuncs[gActiveBattler] = LinkPartnerBufferRunCommand;
-    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
-    {
-        u8 playerId = GetMultiplayerId();
+    if (!(gBattleTypeFlags & BATTLE_TYPE_LINK))
 
-        PrepareBufferDataTransferLink(2, 4, &playerId);
-        gBattleBufferA[gActiveBattler][0] = CONTROLLER_TERMINATOR_NOP;
-    }
-    else
     {
         gBattleControllerExecFlags &= ~gBitTable[gActiveBattler];
     }

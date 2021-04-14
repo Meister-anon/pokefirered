@@ -1220,10 +1220,6 @@ Help_Text_DefineAttack:: @ 81B80EC
 	.string "ATTACK indicates the power of an\n"
 	.string "offensive move. The higher this stat,\l"
 	.string "the more powerful the move.\l"
-	.string "It is applied for the following move\l"
-	.string "types: NORMAL, POISON, GROUND,\l"
-	.string "FLYING, BUG, FIGHTING, ROCK, GHOST,\l"
-	.string "and STEEL.$"
 
 Help_Text_DefineDefense:: @ 81B81C2
 	.string "DEFENSE indicates the resistance a\n"
@@ -1236,9 +1232,6 @@ Help_Text_DefineSpAtk:: @ 81B8256
 	.string "power of a special attack move.\l"
 	.string "The higher this stat, the more powerful\l"
 	.string "the special attack move.\l"
-	.string "It is applied for the following move\l"
-	.string "types: FIRE, WATER, ELECTRIC, GRASS,\l"
-	.string "ICE, PSYCHIC, DRAGON, and DARK.$"
 
 Help_Text_DefineSpDef:: @ 81B8348
 	.string "SP. DEF (Special Defense) indicates\n"

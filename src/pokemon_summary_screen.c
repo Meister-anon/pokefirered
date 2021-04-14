@@ -1144,7 +1144,7 @@ static void sub_8134840(u8 taskId)
         }
 
         if ((!FuncIsActiveTask(sub_8134BAC)) || FuncIsActiveTask(sub_813B3F0))
-        {
+        { // put summary screen actions else if
             if (JOY_NEW(DPAD_UP))
             {
                 sub_813B120(taskId, -1);
@@ -1160,7 +1160,7 @@ static void sub_8134840(u8 taskId)
                 if (sMonSummaryScreen->curPageIndex == PSS_PAGE_INFO)
                 {
                     PlaySE(SE_SELECT);
-                    sMonSummaryScreen->state3270 = PSS_STATE3270_4;
+                    sMonSummaryScreen->state3270 = PSS_STATE3270_4; // close menu
                 }
                 else if (sMonSummaryScreen->curPageIndex == PSS_PAGE_MOVES)
                 {
@@ -1174,7 +1174,7 @@ static void sub_8134840(u8 taskId)
             }
             else if (JOY_NEW(B_BUTTON))
             {
-                sMonSummaryScreen->state3270 = PSS_STATE3270_4;
+                sMonSummaryScreen->state3270 = PSS_STATE3270_4; // close menu
             }
         }
         break;
@@ -2057,7 +2057,7 @@ static u8 sub_8136040(void)
     return FALSE;
 }
 
-static void sub_81360D4(void)
+static void sub_81360D4(void) // seems to be PSS_PAGE_INFO or data for it
 {
     u8 tempStr[20];
     u16 dexNum;
@@ -2128,7 +2128,7 @@ static void sub_81360D4(void)
 #define MACRO_8136350_0(x) (63 - StringLength((x)) * 6)
 #define MACRO_8136350_1(x) (27 - StringLength((x)) * 6)
 
-static void sub_8136350(void)
+static void sub_8136350(void) // seems to be PSS_PAGE_SKILLS or data for it.
 {
     u8 tempStr[20];
     u8 level;
@@ -2587,7 +2587,7 @@ static void sub_8137554(void)
         sub_8137970();
 }
 
-static void sub_8137578(void)
+static void sub_8137578(void) // seems to relate to or be PSS_PAGE_INFO
 {
     u8 nature;
     u8 level;
@@ -2902,7 +2902,7 @@ static void sub_8137C90(void)
         BlitMoveInfoIcon(sMonSummaryScreen->unk3000[5], sMonSummaryScreen->unk3250[4] + 1, 3, MACRO_8137270(4));
 }
 
-static void sub_8137D28(u8 curPageIndex)
+static void sub_8137D28(u8 curPageIndex) //
 {
     switch (curPageIndex)
     {

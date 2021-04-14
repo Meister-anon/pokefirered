@@ -29,6 +29,10 @@
 #include "berry_powder.h"
 #include "pokemon_jump.h"
 #include "event_scripts.h"
+//may be able to ues some of these functions to make a new file, for "new game+" just need be selective in which things get reset.
+//my idea for new game place, was to keep all pokemon, change level (probably do by changing amount of exp) of party pokemon, 
+//keep all items, so don't affect pc,  and keep track of when the new game +/ number of playthroughs.  Since i removed link battle, maybe I can have playthrough numbers shown 
+//on card instead.
 
 // this file's functions
 static void ResetMiniGamesResults(void);
@@ -57,9 +61,9 @@ static void InitPlayerTrainerId(void)
     SetTrainerId(trainerId, gSaveBlock2Ptr->playerTrainerId);
 }
 
-static void SetDefaultOptions(void)
+static void SetDefaultOptions(void) //
 {
-    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
+    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_FAST;
     gSaveBlock2Ptr->optionsWindowFrameType = 0;
     gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_MONO;
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
@@ -127,7 +131,7 @@ void NewGameInitData(void)
     ResetFameChecker();
     SetMoney(&gSaveBlock1Ptr->money, 3000);
     ResetGameStats();
-    ClearPlayerLinkBattleRecords();
+    //ClearPlayerLinkBattleRecords();
     InitHeracrossSizeRecord();
     InitMagikarpSizeRecord();
     sub_806E190();

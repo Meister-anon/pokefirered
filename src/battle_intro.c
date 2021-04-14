@@ -15,7 +15,7 @@ extern const u8 gBattleIntroRegOffsBgCnt[];
 static void BattleIntroSlide1(u8 taskId);
 static void BattleIntroSlide2(u8 taskId);
 static void BattleIntroSlide3(u8 taskId);
-static void BattleIntroSlideLink(u8 taskId);
+//static void BattleIntroSlideLink(u8 taskId);
 
 static const TaskFunc sBattleIntroSlideFuncs[] =
 {
@@ -95,12 +95,12 @@ s32 GetAnimBgAttribute(u8 bgId, u8 attributeId)
 void HandleIntroSlide(u8 terrain)
 {
     u8 taskId;
-
+/*
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
     {
         taskId = CreateTask(BattleIntroSlideLink, 0);
-    }
-    else if ((gBattleTypeFlags & BATTLE_TYPE_KYOGRE_GROUDON) && gGameVersion != VERSION_RUBY)
+    }*/
+    if ((gBattleTypeFlags & BATTLE_TYPE_KYOGRE_GROUDON) && gGameVersion != VERSION_RUBY)
     {
         terrain = BATTLE_TERRAIN_UNDERWATER;
         taskId = CreateTask(BattleIntroSlide2, 0);
@@ -390,7 +390,7 @@ static void BattleIntroSlide3(u8 taskId)
     if (gTasks[taskId].data[0] != 4)
         SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[4], 0));
 }
-
+/*
 static void BattleIntroSlideLink(u8 taskId)
 {
     s32 i;
@@ -464,7 +464,7 @@ static void BattleIntroSlideLink(u8 taskId)
         break;
     }
 }
-
+*/
 void CopyBattlerSpriteToBg(s32 bgId, u8 x, u8 y, u8 battlerPosition, u8 palno, u8 *tilesDest, u16 *tilemapDest, u16 tilesOffset)
 {
     s32 i, j;
