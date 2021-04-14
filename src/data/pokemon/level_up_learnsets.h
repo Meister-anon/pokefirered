@@ -5705,3 +5705,11 @@ static const u16 sChimechoLevelUpLearnset[] = {
     LEVEL_UP_MOVE(46, MOVE_PSYCHIC),
     LEVEL_UP_END
 };
+
+static const u16 sVulpixAlolanLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_POWDER_SNOW),
+    LEVEL_UP_MOVE(4, MOVE_TAIL_WHIP),
+    LEVEL_UP_MOVE(7, MOVE_ROAR),
+    LEVEL_UP_MOVE(9, MOVE_SKILL_SWAP),
+    LEVEL_UP_END
+};

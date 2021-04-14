@@ -471,24 +471,52 @@ void PlayCryInternal(u16 species, s8 pan, s8 volume, u8 priority, u8 mode)
     species = SpeciesToCryId(species);
     index = species & 0x7F;
     table = species / 128;
-
+    // oringal species was 412  412/128=3 hence the * 3 ending. I need divide my total species 1207/128
+    //actually forms use same cry, so I only need individual species? idk, the right answer is either 898 or 1207
+    //if I assume same cry for alt species, that leaves megas, I have 50 mega evos. +5 for therian and kyurem forms. maybe +1 for galarian slowpoke
+    //+ 1 for floette enternal flower form... ok both numbers break evenly, I'm just gonna use the biggest number and not worry about exacts.
+    //for 898 its 7, for 1207 its 9   ok they don't break even calculator app just doesn't show decimal places.
     switch (table)
     {
     case 0:
         gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 0) + index] : &gCryTable[(128 * 0) + index]);
+            v0 ? &gCryTable2[(128 * 0) + index] : &gCryTable[(128 * 0) + index]);
         break;
     case 1:
         gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 1) + index] : &gCryTable[(128 * 1) + index]);
+            v0 ? &gCryTable2[(128 * 1) + index] : &gCryTable[(128 * 1) + index]);
         break;
     case 2:
         gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 2) + index] : &gCryTable[(128 * 2) + index]);
+            v0 ? &gCryTable2[(128 * 2) + index] : &gCryTable[(128 * 2) + index]);
         break;
     case 3:
         gMPlay_PokemonCry = SetPokemonCryTone(
-          v0 ? &gCryTable2[(128 * 3) + index] : &gCryTable[(128 * 3) + index]);
+            v0 ? &gCryTable2[(128 * 3) + index] : &gCryTable[(128 * 3) + index]);
+        break;
+    case 4:
+        gMPlay_PokemonCry = SetPokemonCryTone(
+            v0 ? &gCryTable2[(128 * 4) + index] : &gCryTable[(128 * 4) + index]);
+        break;
+    case 5:
+        gMPlay_PokemonCry = SetPokemonCryTone(
+            v0 ? &gCryTable2[(128 * 5) + index] : &gCryTable[(128 * 5) + index]);
+        break;
+    case 6:
+        gMPlay_PokemonCry = SetPokemonCryTone(
+            v0 ? &gCryTable2[(128 * 6) + index] : &gCryTable[(128 * 6) + index]);
+        break;
+    case 7:
+        gMPlay_PokemonCry = SetPokemonCryTone(
+            v0 ? &gCryTable2[(128 * 7) + index] : &gCryTable[(128 * 7) + index]);
+        break;
+    case 8:
+        gMPlay_PokemonCry = SetPokemonCryTone(
+            v0 ? &gCryTable2[(128 * 8) + index] : &gCryTable[(128 * 8) + index]);
+        break;
+    case 9:
+        gMPlay_PokemonCry = SetPokemonCryTone(
+            v0 ? &gCryTable2[(128 * 9) + index] : &gCryTable[(128 * 9) + index]);
         break;
     }
 }

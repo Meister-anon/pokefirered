@@ -1,6 +1,7 @@
 #ifndef GUARD_CONSTANTS_ITEMS_H
 #define GUARD_CONSTANTS_ITEMS_H
-
+// because of my change to the item table I need to change all values that are ITEM_(some hex value) into ITEM_NONE I think..yeah I do, because they were previously
+//auto aligned with a question mark icon & palette.   actually imma leave it for now, since I plan to fill those placeholders in.
 #define ITEM_NONE 0
 #define ITEM_MASTER_BALL 1
 #define ITEM_ULTRA_BALL 2
@@ -77,18 +78,18 @@
 #define ITEM_GUARD_SPEC 73
 #define ITEM_DIRE_HIT 74
 #define ITEM_X_ATTACK 75
-#define ITEM_X_DEFEND 76
+#define ITEM_X_DEFENSE 76
 #define ITEM_X_SPEED 77
 #define ITEM_X_ACCURACY 78
-#define ITEM_X_SPECIAL 79
+#define ITEM_X_SP_ATK 79
 #define ITEM_POKE_DOLL 80
 #define ITEM_FLUFFY_TAIL 81
-#define ITEM_052 82
+#define ITEM_X_SP_DEF 82
 #define ITEM_SUPER_REPEL 83
 #define ITEM_MAX_REPEL 84
 #define ITEM_ESCAPE_ROPE 85
-#define ITEM_REPEL 86
-#define ITEM_057 87
+#define ITEM_ABILITY_CAPSULE 86
+#define ITEM_REPEL 87
 #define ITEM_058 88
 #define ITEM_059 89
 #define ITEM_05A 90
@@ -100,10 +101,10 @@
 #define ITEM_THUNDER_STONE 96
 #define ITEM_WATER_STONE 97
 #define ITEM_LEAF_STONE 98
-#define ITEM_063 99
-#define ITEM_064 100
-#define ITEM_065 101
-#define ITEM_066 102
+#define ITEM_DAWN_STONE 99
+#define ITEM_DUSK_STONE 100
+#define ITEM_SHINY_STONE 101
+#define ITEM_ICE_STONE 102
 #define ITEM_TINY_MUSHROOM 103
 #define ITEM_BIG_MUSHROOM 104
 #define ITEM_069 105
@@ -119,9 +120,9 @@
 #define ITEM_073 115
 #define ITEM_074 116
 #define ITEM_075 117
-#define ITEM_076 118
-#define ITEM_077 119
-#define ITEM_078 120
+#define ITEM_WHIPPED_DREAM 118
+#define ITEM_SACHET 119
+#define ITEM_OVAL_STONE 120
 #define ITEM_ORANGE_MAIL 121
 #define ITEM_HARBOR_MAIL 122
 #define ITEM_GLITTER_MAIL 123
@@ -177,9 +178,9 @@
 #define ITEM_LANSAT_BERRY 173
 #define ITEM_STARF_BERRY 174
 #define ITEM_ENIGMA_BERRY 175
-#define ITEM_0B0 176
-#define ITEM_0B1 177
-#define ITEM_0B2 178
+#define ITEM_PROTECTOR 176 // add more evo "use" items below 0B2
+#define ITEM_DRAGON_SCALE 177
+#define ITEM_0B2 178 //last value for can be used on pokemon
 #define ITEM_BRIGHT_POWDER 179
 #define ITEM_WHITE_HERB 180
 #define ITEM_MACHO_BRACE 181
@@ -200,9 +201,9 @@
 #define ITEM_FOCUS_BAND 196
 #define ITEM_LUCKY_EGG 197
 #define ITEM_SCOPE_LENS 198
-#define ITEM_METAL_COAT 199
+#define ITEM_C7 199
 #define ITEM_LEFTOVERS 200
-#define ITEM_DRAGON_SCALE 201
+#define ITEM_0C9 201
 #define ITEM_LIGHT_BALL 202
 #define ITEM_SOFT_SAND 203
 #define ITEM_HARD_STONE 204
@@ -219,36 +220,38 @@
 #define ITEM_CHARCOAL 215
 #define ITEM_DRAGON_FANG 216
 #define ITEM_SILK_SCARF 217
-#define ITEM_UP_GRADE 218
+#define ITEM_0DA 218
 #define ITEM_SHELL_BELL 219
-#define ITEM_SEA_INCENSE 220
-#define ITEM_LAX_INCENSE 221
+#define ITEM_0DC 220
+#define ITEM_0DD 221
 #define ITEM_LUCKY_PUNCH 222
 #define ITEM_METAL_POWDER 223
 #define ITEM_THICK_CLUB 224
 #define ITEM_STICK 225
-#define ITEM_0E2 226
-#define ITEM_0E3 227
+#define ITEM_PRISM_SCALE 226 // will make this an evo hold item level up, but because its milotic and difficult, make it random %4 only evolve while 0, so a 1 in 5 each level up.
+#define ITEM_RAZOR_CLAW 227
 #define ITEM_0E4 228
 #define ITEM_0E5 229
 #define ITEM_0E6 230
 #define ITEM_0E7 231
 #define ITEM_0E8 232
 #define ITEM_0E9 233
-#define ITEM_0EA 234
-#define ITEM_0EB 235
-#define ITEM_0EC 236
-#define ITEM_0ED 237
-#define ITEM_0EE 238
-#define ITEM_0EF 239
-#define ITEM_0F0 240
-#define ITEM_0F1 241
-#define ITEM_0F2 242
-#define ITEM_0F3 243
+//Power Items
+#define ITEM_POWER_BRACER 234
+#define ITEM_POWER_BELT 235
+#define ITEM_POWER_LENS 236
+#define ITEM_POWER_BAND 237
+#define ITEM_POWER_ANKLET 238
+#define ITEM_POWER_WEIGHT 239
+//Fossils
+#define ITEM_SAIL_FOSSIL 240
+#define ITEM_JAW_FOSSIL 241
+#define ITEM_PLUME_FOSSIL 242
+#define ITEM_COVER_FOSSIL 243
 #define ITEM_0F4 244
 #define ITEM_0F5 245
-#define ITEM_0F6 246
-#define ITEM_0F7 247
+#define ITEM_SKULL_FOSSIL 246
+#define ITEM_ARMOR_FOSSIL 247
 #define ITEM_0F8 248
 #define ITEM_0F9 249
 #define ITEM_0FA 250
@@ -410,7 +413,7 @@
 #define ITEM_HM07_WATERFALL ITEM_HM07
 #define ITEM_HM08_DIVE ITEM_HM08
 
-// FireRed/LeafGreen
+// FireRed/LeafGreen  believe this is key items actually maybe..?
 #define ITEM_OAKS_PARCEL 349
 #define ITEM_POKE_FLUTE 350
 #define ITEM_SECRET_KEY 351
@@ -437,21 +440,251 @@
 #define ITEM_POWDER_JAR 372
 #define ITEM_RUBY 373
 #define ITEM_SAPPHIRE 374
+#define ITEM_ULTIMA_BRACE 375
+#define ITEM_EV_SHACKLES  376
+// Secondary Set of Use items  (mostly for evo) 
+#define ITEM_UP_GRADE 377  //need to change these items in other items.h so they are evo items.
+#define ITEM_ELECTIRIZER 378
+#define ITEM_MAGMARIZER 379
+#define ITEM_DUBIOUS_DISC 380
+#define ITEM_REAPER_CLOTH 381
+#define ITEM_METAL_COAT 382
+#define ITEM_LINK_STONE 383 /*
+#define ITEM_ABOMASITE 384
+#define ITEM_ABOMASITE 385
+#define ITEM_ABSOLITE 386
+#define ITEM_AERODACTYLITE 399
+#define ITEM_AGGRONITE 400
+#define ITEM_ALAKAZITE 401
+#define ITEM_ALTARIANITE 402
+#define ITEM_AMPHAROSITE 403
+#define ITEM_AUDINITE 404
+#define ITEM_BANETTITE 405
+#define ITEM_BEEDRILLITE 406
+#define ITEM_BLASTOISINITE 407
+#define ITEM_BLAZIKENITE 408
+#define ITEM_CAMERUPTITE 409
+#define ITEM_CHARIZARDITE_X 410
+#define ITEM_CHARIZARDITE_Y 411
+#define ITEM_DIANCITE 412
+#define ITEM_GALLADITE 413
+#define ITEM_GARCHOMPITE 414
+#define ITEM_GARDEVOIRITE 415
+#define ITEM_GENGARITE 416
+#define ITEM_GLALITITE 417
+#define ITEM_GYARADOSITE 418
+#define ITEM_HERACRONITE 419
+#define ITEM_HOUNDOOMINITE 420
+#define ITEM_KANGASKHANITE 421
+#define ITEM_LATIASITE 422
+#define ITEM_LATIOSITE 423
+#define ITEM_LOPUNNITE 424
+#define ITEM_LUCARIONITE 425
+#define ITEM_MANECTITE 426
+#define ITEM_MAWILITE 427
+#define ITEM_MEDICHAMITE 428
+#define ITEM_METAGROSSITE 429
+#define ITEM_MEWTWONITE_X 430
+#define ITEM_MEWTWONITE_Y 431
+#define ITEM_PIDGEOTITE 432
+#define ITEM_PINSIRITE 433
+#define ITEM_SABLENITE 434
+#define ITEM_SALAMENCITE 435
+#define ITEM_SCEPTILITE 436
+#define ITEM_SCIZORITE 437
+#define ITEM_SHARPEDONITE 438
+#define ITEM_SLOWBRONITE 439
+#define ITEM_STEELIXITE 440
+#define ITEM_SWAMPERTITE 441
+#define ITEM_TYRANITARITE 442
+#define ITEM_VENUSAURITE 443 //end of mega
+//K looks like it doesn't matter where I put it except the use items,
+// because effects and bag placement are set in the items.h file.
+#define ITEM_MEGA_BRACELET 444 // should move set as key item.
+//More hold items
+// Z Crystals
+#define ITEM_Z_RING                   568
+#define ITEM_NORMALIUM_Z              569
+#define ITEM_FIGHTINIUM_Z             570
+#define ITEM_FLYINIUM_Z               571
+#define ITEM_POISONIUM_Z              572
+#define ITEM_GROUNDIUM_Z              573
+#define ITEM_ROCKIUM_Z                574
+#define ITEM_BUGINIUM_Z               575
+#define ITEM_GHOSTIUM_Z               576
+#define ITEM_STEELIUM_Z               577
+#define ITEM_FIRIUM_Z                 578
+#define ITEM_WATERIUM_Z               579
+#define ITEM_GRASSIUM_Z               580
+#define ITEM_ELECTRIUM_Z              581
+#define ITEM_PSYCHIUM_Z               582
+#define ITEM_ICIUM_Z                  583
+#define ITEM_DRAGONIUM_Z              584
+#define ITEM_DARKINIUM_Z              585
+#define ITEM_FAIRIUM_Z                586
+#define ITEM_ALORAICHIUM_Z            587
+#define ITEM_DECIDIUM_Z               588
+#define ITEM_EEVIUM_Z                 589
+#define ITEM_INCINIUM_Z               590
+#define ITEM_KOMMONIUM_Z              591
+#define ITEM_LUNALIUM_Z               592
+#define ITEM_LYCANIUM_Z               593
+#define ITEM_MARSHADIUM_Z             594
+#define ITEM_MEWNIUM_Z                595
+#define ITEM_MIMIKIUM_Z               596
+#define ITEM_PIKANIUM_Z               597
+#define ITEM_PIKASHUNIUM_Z            598
+#define ITEM_PRIMARIUM_Z              599
+#define ITEM_SNORLIUM_Z               600
+#define ITEM_SOLGANIUM_Z              601
+#define ITEM_TAPUNIUM_Z               602
+#define ITEM_ULTRANECROZIUM_Z         603
+//2nd set non-use held items
+#define ITEM_CHOICE_SCARF 266
+#define ITEM_CHOICE_SPECS 267
+#define ITEM_FOCUS_SASH 268
+#define ITEM_WIDE_LENS 269
+#define ITEM_ZOOM_LENS 270
+#define ITEM_METRONOME 271
+#define ITEM_MUSCLE_BAND 272
+#define ITEM_WISE_GLASSES 273
+#define ITEM_EXPERT_BELT 274
+#define ITEM_LIGHT_CLAY 275
+#define ITEM_ICY_ROCK 276
+#define ITEM_SMOOTH_ROCK 277
+#define ITEM_HEAT_ROCK 278
+#define ITEM_DAMP_ROCK 279
+#define ITEM_DESTINY_KNOT 280
+#define ITEM_GRIP_CLAW 281
+#define ITEM_LIFE_ORB 282
+#define ITEM_TOXIC_ORB 283
+#define ITEM_FLAME_ORB 284
+#define ITEM_STICKY_BARB 285
+#define ITEM_BLACK_SLUDGE 286
+#define ITEM_IRON_BALL 287
+#define ITEM_LAGGING_TAIL 288
+#define ITEM_SHED_SHELL 289
+#define ITEM_BIG_ROOT 290
+#define ITEM_EVIOLITE 291
+#define ITEM_FLOAT_STONE 292
+#define ITEM_ROCKY_HELMET 293
+#define ITEM_AIR_BALLOON 294
+#define ITEM_RED_CARD 295
+#define ITEM_RING_TARGET 296
+#define ITEM_BINDING_BAND 297
+#define ITEM_EJECT_BUTTON 298
+#define ITEM_ABSORB_BULB 299
+#define ITEM_CELL_BATTERY 300
+#define ITEM_LUMINOUS_MOSS 301
+#define ITEM_SNOWBALL 302
+#define ITEM_WEAKNESS_POLICY 303
+#define ITEM_ASSAULT_VEST 304
+#define ITEM_SAFETY_GOGGLES 305
+#define ITEM_ADRENALINE_ORB 306
+#define ITEM_TERRAIN_EXTENDER 307
+#define ITEM_PROTECTIVE_PADS 308
+#define ITEM_ELECTRIC_SEED 309
+#define ITEM_PSYCHIC_SEED 310
+#define ITEM_MISTY_SEED 311
+#define ITEM_GRASSY_SEED 312*/
+// Incenses
+#define ITEM_SEA_INCENSE 384
+#define ITEM_LAX_INCENSE 385 /*  ok these new values for incense are actually better, since they aren't supposed to be for use, just hold.
+#define ITEM_ODD_INCENSE 386
+#define ITEM_ROCK_INCENSE 387
+#define ITEM_FULL_INCENSE 388
+#define ITEM_WAVE_INCENSE 389
+#define ITEM_ROSE_INCENSE 390
+#define ITEM_LUCK_INCENSE 391
+#define ITEM_PURE_INCENSE 392
+// Plates
+#define ITEM_INSECT_PLATE 322
+#define ITEM_DREAD_PLATE 323
+#define ITEM_DRACO_PLATE 324
+#define ITEM_ZAP_PLATE 325
+#define ITEM_PIXIE_PLATE 326
+#define ITEM_FIST_PLATE 327
+#define ITEM_FLAME_PLATE 328
+#define ITEM_SKY_PLATE 329
+#define ITEM_SPOOKY_PLATE 330
+#define ITEM_MEADOW_PLATE 331
+#define ITEM_EARTH_PLATE 332
+#define ITEM_ICICLE_PLATE 333
+#define ITEM_TOXIC_PLATE 334
+#define ITEM_MIND_PLATE 335
+#define ITEM_STONE_PLATE 336
+#define ITEM_IRON_PLATE 337
+#define ITEM_SPLASH_PLATE 338
+// Gems
+#define ITEM_BUG_GEM 339
+#define ITEM_DARK_GEM 340
+#define ITEM_DRAGON_GEM 341
+#define ITEM_ELECTRIC_GEM 342
+#define ITEM_FAIRY_GEM 343
+#define ITEM_FIGHTING_GEM 344
+#define ITEM_FIRE_GEM 345
+#define ITEM_FLYING_GEM 346
+#define ITEM_GHOST_GEM 347
+#define ITEM_GRASS_GEM 348
+#define ITEM_GROUND_GEM 349
+#define ITEM_ICE_GEM 350
+#define ITEM_NORMAL_GEM 351
+#define ITEM_POISON_GEM 352
+#define ITEM_PSYCHIC_GEM 353
+#define ITEM_ROCK_GEM 354
+#define ITEM_STEEL_GEM 355
+#define ITEM_WATER_GEM 356
+// Memories
+#define ITEM_BUG_MEMORY 371
+#define ITEM_DARK_MEMORY 372
+#define ITEM_DRAGON_MEMORY 373
+#define ITEM_ELECTRIC_MEMORY 374
+#define ITEM_FAIRY_MEMORY 375
+#define ITEM_FIGHTING_MEMORY 376
+#define ITEM_FIRE_MEMORY 377
+#define ITEM_FLYING_MEMORY 378
+#define ITEM_GHOST_MEMORY 379
+#define ITEM_GRASS_MEMORY 380
+#define ITEM_GROUND_MEMORY 381
+#define ITEM_ICE_MEMORY 382
+#define ITEM_POISON_MEMORY 383
+#define ITEM_PSYCHIC_MEMORY 384
+#define ITEM_ROCK_MEMORY 385
+#define ITEM_STEEL_MEMORY 386
+#define ITEM_WATER_MEMORY 387
+// Drives
+#define ITEM_DOUSE_DRIVE 388
+#define ITEM_SHOCK_DRIVE 389
+#define ITEM_BURN_DRIVE 390
+#define ITEM_CHILL_DRIVE 391
 
-#define ITEM_N_A 375
-
+//extra key items
+#define ITEM_BEATER
+#define ITEM_BEATER
+#define ITEM_BEATER
+#define ITEM_GRACIDEA
+#define ITEM_ODD_KEYSTONE
+#define ITEM_ADAMANT_ORB
+#define ITEM_LUSTROUS_ORB
+#define ITEM_GRISEOUS_ORB */
+#define ITEM_N_A 386 // keep this as last item value,   emerald stuff needs to be a separate value, otherwise seems to make duplicate error
+#define ITEMS_COUNT ITEM_N_A +1
+#define ITEM_FIELD_ARROW ITEMS_COUNT
 // Emerald
-#define ITEM_MAGMA_EMBLEM 375
-#define ITEM_OLD_SEA_MAP 376
+#define ITEM_MAGMA_EMBLEM 388
+#define ITEM_OLD_SEA_MAP 389
 
 #define FIRST_BERRY_INDEX ITEM_CHERI_BERRY
 #define LAST_BERRY_INDEX ITEM_ENIGMA_BERRY
 #define ITEM_TO_BERRY(itemId)(((itemId - FIRST_BERRY_INDEX) + 1))
 
-#define NUM_TECHNICAL_MACHINES 50
+#define NUM_TECHNICAL_MACHINES 50 //change to 120 later
 #define NUM_HIDDEN_MACHINES     8
 
 // Check if the item is one that can be used on a Pokemon.
 #define IS_POKEMON_ITEM(item) ((item) >= ITEM_POTION && (item) <= ITEM_0B2)
-
+#define IS_POKEMON_ITEM2(item) ((item) >= ITEM_EV_SHACKLES && (item) <= ITEM_LINK_STONE)
+//BECAUSE of this need to add mega stones in somewhere before to cutoff.
+// or copy function for define and create a new range, for IS_POKEMON_ITEM2
+//that way I can just add on to end. but before N_A
 #endif  // GUARD_CONSTANTS_ITEMS_H

@@ -587,8 +587,8 @@ static void Task_EvolutionScene(u8 taskId)
     struct Pokemon* mon = &gPlayerParty[gTasks[taskId].tPartyId];
 
     // Automatically cancel if the Pokemon would evolve into a species you have not
-    // yet unlocked, such as Crobat.
-    if (!IsNationalPokedexEnabled()
+    // yet unlocked, such as Crobat.  comment out below function to allow all evolutions without needing national dex.
+/*    if (!IsNationalPokedexEnabled()
         && gTasks[taskId].tState == 8
         && gTasks[taskId].tPostEvoSpecies > SPECIES_MEW)
     {
@@ -598,7 +598,7 @@ static void Task_EvolutionScene(u8 taskId)
         DestroyMovingBackgroundTasks();
         return;
     }
-
+*/
     // check if B Button was held, so the evolution gets stopped
     if (gMain.heldKeys == B_BUTTON
         && gTasks[taskId].tState == 8
@@ -989,7 +989,8 @@ static void Task_TradeEvolutionScene(u8 taskId)
     struct Pokemon* mon = &gPlayerParty[gTasks[taskId].tPartyId];
 
     // Automatically cancel if the Pokemon would evolve into a species you have not
-    // yet unlocked, such as Crobat.
+    // yet unlocked, such as Crobat.    not doing that.  
+    /*
     if (!IsNationalPokedexEnabled()
         && gTasks[taskId].tState == 7
         && gTasks[taskId].tPostEvoSpecies > SPECIES_MEW)
@@ -1001,7 +1002,7 @@ static void Task_TradeEvolutionScene(u8 taskId)
             gTasks[sEvoGraphicsTaskId].EvoGraphicsTaskEvoStop = TRUE;
             DestroyMovingBackgroundTasks();
         }
-    }
+    } */
 
     switch (gTasks[taskId].tState)
     {

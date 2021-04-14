@@ -30,8 +30,8 @@ struct HallofFameMon
 {
     u32 tid;
     u32 personality;
-    u16 species:9;
-    u16 lvl:7;
+    u16 species :11; // since Species_egg with expand mon is 1260, and bit 9 is 2^9-1 aka 511, had to increase to bit 11.
+    u16 lvl :7;
     u8 nick[10];
 };
 
@@ -170,52 +170,52 @@ static const struct OamData sOamData_Confetti = {
 };
 
 static const union AnimCmd sAnimCmd_Frame00[] = {
-    ANIMCMD_FRAME( 0, 30),
+    ANIMCMD_FRAME(0, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame01[] = {
-    ANIMCMD_FRAME( 1, 30),
+    ANIMCMD_FRAME(1, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame02[] = {
-    ANIMCMD_FRAME( 2, 30),
+    ANIMCMD_FRAME(2, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame03[] = {
-    ANIMCMD_FRAME( 3, 30),
+    ANIMCMD_FRAME(3, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame04[] = {
-    ANIMCMD_FRAME( 4, 30),
+    ANIMCMD_FRAME(4, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame05[] = {
-    ANIMCMD_FRAME( 5, 30),
+    ANIMCMD_FRAME(5, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame06[] = {
-    ANIMCMD_FRAME( 6, 30),
+    ANIMCMD_FRAME(6, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame07[] = {
-    ANIMCMD_FRAME( 7, 30),
+    ANIMCMD_FRAME(7, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame08[] = {
-    ANIMCMD_FRAME( 8, 30),
+    ANIMCMD_FRAME(8, 30),
     ANIMCMD_END
 };
 
 static const union AnimCmd sAnimCmd_Frame09[] = {
-    ANIMCMD_FRAME( 9, 30),
+    ANIMCMD_FRAME(9, 30),
     ANIMCMD_END
 };
 
@@ -294,7 +294,7 @@ static const struct HallofFameMon sDummyHofMon = {
     .nick = __("          ")
 };
 
-static const u8 sUnused[] = {2, 1, 3, 6, 4, 5};
+static const u8 sUnused[] = {2, 1, 3, 6, 4, 5 };
 
 static void VBlankCB_HofIdle(void)
 {
@@ -787,7 +787,7 @@ static void Task_HofPC_CopySaveData(u8 taskId)
 static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
 {
     struct HallofFameTeam *savedTeams = sHofMonPtr;
-    struct HallofFameMon *currMon;
+    struct HallofFameMon* currMon;
     u16 i;
 
     for (i = 0; i < gTasks[taskId].data[0]; i++)
@@ -825,7 +825,7 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
             }
 
             spriteId = CreateMonPicSprite_HandleDeoxys(currMon->species, currMon->tid, currMon->personality, TRUE, posX,
-                                                       posY, i, 0xFFFF);
+                posY, i, 0xFFFF);
             gSprites[spriteId].oam.priority = 1;
             gTasks[taskId].data[5 + i] = spriteId;
         }
@@ -1080,7 +1080,7 @@ static void HallOfFame_PrintPlayerInfo(u8 unused1, u8 unused2)
     u8 text[20];
     u16 trainerId;
     s32 textWidth = sWindowTemplate.width * 8 - 6;
-    
+
     FillWindowPixelBuffer(1, PIXEL_FILL(1));
     PutWindowTilemap(1);
     DrawStdFrameWithCustomTileAndPalette(1, FALSE, 0x21D, 0xD);

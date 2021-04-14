@@ -1356,6 +1356,17 @@ static void atk06_typecalc(void)
         gBattleCommunication[6] = 3;
         RecordAbilityBattle(gBattlerTarget, gLastUsedAbility);
     }
+    if (gBattleMons[gBattlerTarget].ability == ABILITY_DISPIRIT_GUARD && AttacksThisTurn(gBattlerAttacker, gCurrentMove) == 2
+        && (!(gMoveResultFlags & MOVE_RESULT_NOT_VERY_EFFECTIVE) || ((gMoveResultFlags & (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)) == (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)))
+        && gBattleMoves[gCurrentMove].power)
+    {
+        gLastUsedAbility = ABILITY_DISPIRIT_GUARD;
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gLastLandedMoves[gBattlerTarget] = 0;
+        gLastHitByType[gBattlerTarget] = 0;
+        gBattleCommunication[6] = 3;
+        RecordAbilityBattle(gBattlerTarget, gLastUsedAbility);
+    }
     if (gMoveResultFlags & MOVE_RESULT_DOESNT_AFFECT_FOE)
         gProtectStructs[gBattlerAttacker].targetNotAffected = 1;
     ++gBattlescriptCurrInstr;
@@ -1428,6 +1439,15 @@ static void CheckWonderGuardAndLevitate(void)
             RecordAbilityBattle(gBattlerTarget, ABILITY_WONDER_GUARD);
         }
     }
+    else if (gBattleMons[gBattlerTarget].ability == ABILITY_DISPIRIT_GUARD && AttacksThisTurn(gBattlerAttacker, gCurrentMove) == 2)
+    {
+        if (((flags & 1) || !(flags & 2)) && gBattleMoves[gCurrentMove].power) //think reversing was right. 
+        { //    I believe it says if super effectie, or not Not effective, do same as wonder guard.
+            gLastUsedAbility = ABILITY_DISPIRIT_GUARD;
+            gBattleCommunication[6] = 3;
+            RecordAbilityBattle(gBattlerTarget, ABILITY_DISPIRIT_GUARD);
+        }
+    } // the way this reads confuses me, I may just replace with cfru argument instead, but I just reversed whatever was in wonderguard function.
 }
 
 // same as ModulateDmgByType except different arguments
@@ -1516,6 +1536,14 @@ u8 TypeCalc(u16 move, u8 attacker, u8 defender)
      && gBattleMoves[move].power)
         flags |= MOVE_RESULT_MISSED;
     return flags;
+
+    if (gBattleMons[defender].ability == ABILITY_DISPIRIT_GUARD
+        && !(flags & MOVE_RESULT_MISSED)
+        && AttacksThisTurn(attacker, move) == 2
+        && (!(flags & MOVE_RESULT_NOT_VERY_EFFECTIVE) || ((flags & (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)) == (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)))
+        && gBattleMoves[move].power)
+        flags |= MOVE_RESULT_MISSED;
+    return flags;
 }
 
 u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility)
@@ -1556,6 +1584,12 @@ u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility)
     if (targetAbility == ABILITY_WONDER_GUARD
      && (!(flags & MOVE_RESULT_SUPER_EFFECTIVE) || ((flags & (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)) == (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)))
      && gBattleMoves[move].power)
+        flags |= MOVE_RESULT_DOESNT_AFFECT_FOE;
+    return flags;
+
+    if (targetAbility == ABILITY_DISPIRIT_GUARD
+        && (!(flags & MOVE_RESULT_NOT_VERY_EFFECTIVE) || ((flags & (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)) == (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)))
+        && gBattleMoves[move].power)
         flags |= MOVE_RESULT_DOESNT_AFFECT_FOE;
     return flags;
 }
@@ -2915,8 +2949,8 @@ static void atk1D_jumpifstatus2(void)
 static void atk1E_jumpifability(void)
 {
     u8 battlerId;
-    u8 ability = gBattlescriptCurrInstr[2];
-    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 3);
+    u16 ability = T2_READ_16(gBattlescriptCurrInstr + 2);
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 4);
 
     if (gBattlescriptCurrInstr[1] == BS_ATTACKER_SIDE)
     {
@@ -2929,7 +2963,7 @@ static void atk1E_jumpifability(void)
             gBattleScripting.battlerWithAbility = battlerId - 1;
         }
         else
-            gBattlescriptCurrInstr += 7;
+            gBattlescriptCurrInstr += 8;
     }
     else if (gBattlescriptCurrInstr[1] == BS_NOT_ATTACKER_SIDE)
     {
@@ -3109,16 +3143,16 @@ static void atk23_getexp(void)
             {
                 *exp = calculatedExp / 2 / viaSentIn;
                 if (*exp == 0)
-                    *exp = 1;
+                    *exp = 0; // having this be 1 ensures a gain of exp of 1 no matter what. I changed to 0
                 gExpShareExp = calculatedExp / 2 / viaExpShare;
                 if (gExpShareExp == 0)
-                    gExpShareExp = 1;
+                    gExpShareExp = 0;
             }
             else
             {
                 *exp = calculatedExp / viaSentIn;
                 if (*exp == 0)
-                    *exp = 1;
+                    *exp = 0;
                 gExpShareExp = 0;
             }
             ++gBattleScripting.atk23_state;
@@ -3166,7 +3200,9 @@ static void atk23_getexp(void)
                     if (holdEffect == HOLD_EFFECT_EXP_SHARE)
                         gBattleMoveDamage += gExpShareExp;
                     if (holdEffect == HOLD_EFFECT_LUCKY_EGG)
-                        gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
+                        gBattleMoveDamage = (gBattleMoveDamage * 150) / 100; //since gBattlemovedamage is *exp, this is for the 1.5 exp boost from lucky egg I can make exp 0 here.
+                    if (holdEffect == HOLD_EFFECT_ULTIMA_BRACE) //should make exp 0
+                        gBattleMoveDamage = 0;
                     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                         gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
                     if (IsTradedMon(&gPlayerParty[gBattleStruct->expGetterMonId])
@@ -3741,10 +3777,10 @@ static void atk42_jumpiftype2(void)
 
 static void atk43_jumpifabilitypresent(void)
 {
-    if (AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, gBattlescriptCurrInstr[1], 0, 0))
-        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
+    if (AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, T1_READ_16(gBattlescriptCurrInstr + 1), 0, 0))
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 3);
     else
-        gBattlescriptCurrInstr += 6;
+        gBattlescriptCurrInstr += 7;
 }
 
 static void atk44_endselectionscript(void)
@@ -4324,6 +4360,18 @@ static void atk4A_typecalc2(void)
      && gBattleMoves[gCurrentMove].power)
     {
         gLastUsedAbility = ABILITY_WONDER_GUARD;
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gLastLandedMoves[gBattlerTarget] = 0;
+        gBattleCommunication[6] = 3;
+        RecordAbilityBattle(gBattlerTarget, gLastUsedAbility);
+    }
+    if (gBattleMons[gBattlerTarget].ability == ABILITY_DISPIRIT_GUARD
+        && !(flags & MOVE_RESULT_NO_EFFECT)
+        && AttacksThisTurn(gBattlerAttacker, gCurrentMove) == 2
+        && (!(flags & MOVE_RESULT_NOT_VERY_EFFECTIVE) || ((flags & (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)) == (MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE)))
+        && gBattleMoves[gCurrentMove].power)
+    {
+        gLastUsedAbility = ABILITY_DISPIRIT_GUARD;
         gMoveResultFlags |= MOVE_RESULT_MISSED;
         gLastLandedMoves[gBattlerTarget] = 0;
         gBattleCommunication[6] = 3;
@@ -7671,7 +7719,7 @@ static void atkAE_healpartystatus(void)
 
             if (species != SPECIES_NONE && species != SPECIES_EGG)
             {
-                u8 ability;
+                u16 ability;
 
                 if (gBattlerPartyIndexes[gBattlerAttacker] == i)
                     ability = gBattleMons[gBattlerAttacker].ability;
@@ -8445,7 +8493,7 @@ static void atkD2_tryswapitems(void) // trick
 
 static void atkD3_trycopyability(void) // role play
 {
-    if (gBattleMons[gBattlerTarget].ability != ABILITY_NONE && gBattleMons[gBattlerTarget].ability != ABILITY_WONDER_GUARD)
+    if (gBattleMons[gBattlerTarget].ability != ABILITY_NONE) //changed to remove excluding abilities like wonderguard
     {
         gBattleMons[gBattlerAttacker].ability = gBattleMons[gBattlerTarget].ability;
         gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
@@ -8552,19 +8600,17 @@ static void atkD9_scaledamagebyhealthratio(void)
     ++gBattlescriptCurrInstr;
 }
 
-static void atkDA_tryswapabilities(void) // skill swap
+static void atkDA_tryswapabilities(void) // skill swap . //remember need to remove wonderguard from all abiility swap functions,. because game freak
 {
     if ((gBattleMons[gBattlerAttacker].ability == 0
         && gBattleMons[gBattlerTarget].ability == 0)
-     || gBattleMons[gBattlerAttacker].ability == ABILITY_WONDER_GUARD
-     || gBattleMons[gBattlerTarget].ability == ABILITY_WONDER_GUARD
-     || gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+     || gMoveResultFlags & MOVE_RESULT_NO_EFFECT) //not sure if nor effect clause would still prevent working on wonderguard.
      {
          gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
      }
     else
     {
-        u8 abilityAtk = gBattleMons[gBattlerAttacker].ability;
+        u16 abilityAtk = gBattleMons[gBattlerAttacker].ability;
         
         gBattleMons[gBattlerAttacker].ability = gBattleMons[gBattlerTarget].ability;
         gBattleMons[gBattlerTarget].ability = abilityAtk;
@@ -8626,8 +8672,8 @@ static void atkDC_trysetgrudge(void)
     else
     {
         gStatuses3[gBattlerAttacker] |= STATUS3_GRUDGE;
-        gBattlescriptCurrInstr += 5;
-    }
+        gBattlescriptCurrInstr += 5; // this means to skip forward 5 steps in the battle script, command listing. useful for selecting specific effects.
+    } //   Also useful to use call or goto instead of jump if use call, should be able to return as I want. with "return;"
 }
 
 static void atkDD_weightdamagecalculation(void)
